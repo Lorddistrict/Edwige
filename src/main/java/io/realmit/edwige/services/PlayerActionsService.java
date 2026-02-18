@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class PlayerActionsService {
-    private final PendingItemStoreService pendingItemStoreService;
+    final private PendingItemStoreService pendingItemStoreService;
 
     public PlayerActionsService(PendingItemStoreService pendingItemStoreService) {
         this.pendingItemStoreService = pendingItemStoreService;

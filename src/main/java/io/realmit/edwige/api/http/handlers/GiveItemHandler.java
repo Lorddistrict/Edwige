@@ -3,7 +3,7 @@ package io.realmit.edwige.api.http.handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import io.realmit.edwige.api.controller.GiveItemController;
-import io.realmit.edwige.api.dto.GiveItemRequest;
+import io.realmit.edwige.api.dto.request.GiveItemRequest;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
 
@@ -15,9 +15,9 @@ import java.nio.charset.StandardCharsets;
 import static io.realmit.edwige.api.http.utils.HttpResponseUtils.sendText;
 import static io.realmit.edwige.api.http.utils.HttpRequestUtils.validateRequestMethod;
 
-public final class GiveItemHandler implements HttpHandler {
+final public class GiveItemHandler implements HttpHandler {
 
-    private final GiveItemController controller;
+    final private GiveItemController controller;
 
     public GiveItemHandler(GiveItemController controller) {
         this.controller = controller;
