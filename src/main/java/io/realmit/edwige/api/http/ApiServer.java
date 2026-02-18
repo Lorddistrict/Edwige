@@ -1,10 +1,13 @@
 package io.realmit.edwige.api.http;
 
 import com.sun.net.httpserver.HttpServer;
+import io.realmit.edwige.api.controller.ServerStatsController;
 import io.realmit.edwige.api.http.handlers.GiveItemHandler;
 import io.realmit.edwige.api.controller.GiveItemController;
+import io.realmit.edwige.api.http.handlers.ServerStatsHandler;
 import io.realmit.edwige.api.service.GiveItemService;
 import io.realmit.edwige.api.service.PendingItemStoreService;
+import io.realmit.edwige.api.service.ServerStatsService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.plugin.Plugin;
 
@@ -13,14 +16,22 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class ApiServer {
+final public class ApiServer {
 
     private ExecutorService executor;
-    private final MessageService messageService;
-    private final PendingItemStoreService pendingItemStoreService;
-    private final Plugin plugin;
-    private final int port;
+    final private MessageService messageService;
+    final private PendingItemStoreService pendingItemStoreService;
+    final private Plugin plugin;
+    final private int port;
     private HttpServer server;
+
+    private GiveItemService giveItemService;
+    private GiveItemController giveItemController;
+    private GiveItemHandler giveItemHandler;
+
+    private ServerStatsService serverInfoService;
+    private ServerStatsController serverInfoController;
+    private ServerStatsHandler serverInfoHandler;
 
     public ApiServer(
             MessageService messageService,
@@ -38,6 +49,9 @@ public final class ApiServer {
         InetSocketAddress address = new InetSocketAddress(port);
         server = HttpServer.create(address, 0);
 
+        initServices();
+        initControllers();
+        initHandlers();
         initEndpoints();
 
         executor = Executors.newCachedThreadPool();
@@ -47,11 +61,24 @@ public final class ApiServer {
         plugin.getLogger().info("API server started on port " + port);
     }
 
-    public void initEndpoints() {
-        GiveItemService giveItemService = new GiveItemService(messageService, pendingItemStoreService, plugin);
-        GiveItemController giveItemController = new GiveItemController(giveItemService);
-        GiveItemHandler giveItemHandler = new GiveItemHandler(giveItemController);
+    private void initServices() {
+        giveItemService = new GiveItemService(messageService, pendingItemStoreService, plugin);
+        serverInfoService = new ServerStatsService();
+    }
+
+    private void initControllers() {
+        giveItemController = new GiveItemController(giveItemService);
+        serverInfoController = new ServerStatsController(serverInfoService);
+    }
+
+    private void initHandlers() {
+        giveItemHandler = new GiveItemHandler(giveItemController);
+        serverInfoHandler = new ServerStatsHandler(serverInfoController);
+    }
+
+    private void initEndpoints() {
         server.createContext("/api/give", giveItemHandler);
+        server.createContext("/api/server", serverInfoHandler);
     }
 
     public void stop() {

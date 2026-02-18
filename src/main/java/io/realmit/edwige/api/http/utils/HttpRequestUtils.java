@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import static io.realmit.edwige.api.http.utils.HttpResponseUtils.sendText;
 
-public final class HttpRequestUtils {
+final public class HttpRequestUtils {
 
     private HttpRequestUtils() {
     }

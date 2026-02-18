@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.service;
 
-import io.realmit.edwige.api.dto.GiveItemRequest;
+import io.realmit.edwige.api.dto.request.GiveItemRequest;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,11 +11,11 @@ import org.bukkit.plugin.Plugin;
 import java.util.Locale;
 import java.util.UUID;
 
-public final class GiveItemService {
+final public class GiveItemService {
 
-    private final MessageService messageService;
-    private final PendingItemStoreService pendingItemStoreService;
-    private final Plugin plugin;
+    final private MessageService messageService;
+    final private PendingItemStoreService pendingItemStoreService;
+    final private Plugin plugin;
 
     public GiveItemService(
             MessageService messageService,

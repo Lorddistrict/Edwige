@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public final class PendingItemStoreService {
+final public class PendingItemStoreService {
 
-    private final Plugin plugin;
-    private final File file;
-    private final Map<UUID, List<ItemStack>> pending = new HashMap<>();
+    final private Plugin plugin;
+    final private File file;
+    final private Map<UUID, List<ItemStack>> pending = new HashMap<>();
 
     public PendingItemStoreService(Plugin plugin) {
         this.plugin = plugin;

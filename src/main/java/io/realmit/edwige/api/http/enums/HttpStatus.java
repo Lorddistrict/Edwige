@@ -11,8 +11,8 @@ public enum HttpStatus {
     HTTP_METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
     HTTP_INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 
-    private final int code;
-    private final String reason;
+    final private int code;
+    final private String reason;
 
     HttpStatus(int code, String reason) {
         this.code = code;
