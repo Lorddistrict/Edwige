@@ -1,11 +1,11 @@
 package io.realmit.edwige.api.http;
 
 import com.sun.net.httpserver.HttpServer;
+import io.realmit.edwige.api.controllers.requests.ConsoleCommandController;
 import io.realmit.edwige.api.controllers.ServerStatsController;
-import io.realmit.edwige.api.http.handlers.GiveItemHandler;
-import io.realmit.edwige.api.controllers.GiveItemController;
+import io.realmit.edwige.api.http.handlers.ConsoleCommandHandler;
 import io.realmit.edwige.api.http.handlers.ServerStatsHandler;
-import io.realmit.edwige.api.services.GiveItemService;
+import io.realmit.edwige.api.services.ConsoleCommandService;
 import io.realmit.edwige.api.services.PendingItemStoreService;
 import io.realmit.edwige.api.services.ServerStatsService;
 import io.realmit.edwige.services.MessageService;
@@ -19,19 +19,17 @@ import java.util.concurrent.Executors;
 final public class ApiServer {
 
     private ExecutorService executor;
-    final private MessageService messageService;
-    final private PendingItemStoreService pendingItemStoreService;
     final private Plugin plugin;
     final private int port;
     private HttpServer server;
 
-    private GiveItemService giveItemService;
-    private GiveItemController giveItemController;
-    private GiveItemHandler giveItemHandler;
-
     private ServerStatsService serverInfoService;
     private ServerStatsController serverInfoController;
     private ServerStatsHandler serverInfoHandler;
+
+    private ConsoleCommandService executeService;
+    private ConsoleCommandController executeController;
+    private ConsoleCommandHandler executeHandler;
 
     public ApiServer(
             MessageService messageService,
@@ -39,8 +37,6 @@ final public class ApiServer {
             Plugin plugin,
             int port
     ) {
-        this.messageService = messageService;
-        this.pendingItemStoreService = pendingItemStoreService;
         this.plugin = plugin;
         this.port = port;
     }
@@ -62,32 +58,32 @@ final public class ApiServer {
     }
 
     private void initServices() {
-        giveItemService = new GiveItemService(messageService, pendingItemStoreService, plugin);
         serverInfoService = new ServerStatsService();
+        executeService = new ConsoleCommandService(plugin);
     }
 
     private void initControllers() {
-        giveItemController = new GiveItemController(giveItemService);
         serverInfoController = new ServerStatsController(serverInfoService);
+        executeController = new ConsoleCommandController(executeService);
     }
 
     private void initHandlers() {
-        giveItemHandler = new GiveItemHandler(giveItemController);
         serverInfoHandler = new ServerStatsHandler(serverInfoController);
+        executeHandler = new ConsoleCommandHandler(executeController);
     }
 
     private void initEndpoints() {
-        server.createContext("/api/give", giveItemHandler);
         server.createContext("/api/server", serverInfoHandler);
+        server.createContext("/api/execute", executeHandler);
     }
 
     public void stop() {
-        if (server != null) {
+        if (null != server) {
             server.stop(0);
             server = null;
         }
 
-        if (executor != null) {
+        if (null != executor) {
             executor.shutdownNow();
             executor = null;
         }
