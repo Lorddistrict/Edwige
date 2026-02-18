@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.dto.request;
+package io.realmit.edwige.api.dto.requests;
 
 public record GiveItemRequest(
         String player,

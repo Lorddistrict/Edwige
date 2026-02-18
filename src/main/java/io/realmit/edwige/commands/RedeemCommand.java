@@ -1,9 +1,8 @@
-package io.realmit.edwige.command;
+package io.realmit.edwige.commands;
 
-import io.realmit.edwige.api.service.PendingItemStoreService;
+import io.realmit.edwige.api.services.PendingItemStoreService;
 import io.realmit.edwige.services.MessageService;
 import io.realmit.edwige.services.PlayerActionsService;
-import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

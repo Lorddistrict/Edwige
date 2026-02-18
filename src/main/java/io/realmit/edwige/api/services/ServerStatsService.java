@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.service;
+package io.realmit.edwige.api.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

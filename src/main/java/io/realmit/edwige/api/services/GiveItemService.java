@@ -1,6 +1,6 @@
-package io.realmit.edwige.api.service;
+package io.realmit.edwige.api.services;
 
-import io.realmit.edwige.api.dto.request.GiveItemRequest;
+import io.realmit.edwige.api.dto.requests.GiveItemRequest;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

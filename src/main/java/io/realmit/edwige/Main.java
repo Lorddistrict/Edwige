@@ -1,9 +1,9 @@
 package io.realmit.edwige;
 
 import io.realmit.edwige.api.http.ApiServer;
-import io.realmit.edwige.api.listener.PendingItemJoinListener;
-import io.realmit.edwige.api.service.PendingItemStoreService;
-import io.realmit.edwige.command.RedeemCommand;
+import io.realmit.edwige.api.listeners.PendingItemJoinListener;
+import io.realmit.edwige.api.services.PendingItemStoreService;
+import io.realmit.edwige.commands.RedeemCommand;
 import io.realmit.edwige.services.MessageService;
 import io.realmit.edwige.services.PlayerActionsService;
 import org.bukkit.Bukkit;

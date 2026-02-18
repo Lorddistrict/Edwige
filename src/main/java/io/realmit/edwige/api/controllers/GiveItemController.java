@@ -1,7 +1,7 @@
-package io.realmit.edwige.api.controller;
+package io.realmit.edwige.api.controllers;
 
-import io.realmit.edwige.api.dto.request.GiveItemRequest;
-import io.realmit.edwige.api.service.GiveItemService;
+import io.realmit.edwige.api.dto.requests.GiveItemRequest;
+import io.realmit.edwige.api.services.GiveItemService;
 
 final public class GiveItemController {
 

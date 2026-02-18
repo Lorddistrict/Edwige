@@ -2,8 +2,8 @@ package io.realmit.edwige.api.http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.realmit.edwige.api.controller.GiveItemController;
-import io.realmit.edwige.api.dto.request.GiveItemRequest;
+import io.realmit.edwige.api.controllers.GiveItemController;
+import io.realmit.edwige.api.dto.requests.GiveItemRequest;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
 

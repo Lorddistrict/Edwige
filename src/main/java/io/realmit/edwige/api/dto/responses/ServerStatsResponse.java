@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.dto.response;
+package io.realmit.edwige.api.dto.responses;
 
 public record ServerStatsResponse (
     int onlineCount,

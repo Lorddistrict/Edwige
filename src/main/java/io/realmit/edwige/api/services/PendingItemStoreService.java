@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.service;
+package io.realmit.edwige.api.services;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

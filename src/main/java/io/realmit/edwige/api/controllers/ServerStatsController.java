@@ -1,7 +1,7 @@
-package io.realmit.edwige.api.controller;
+package io.realmit.edwige.api.controllers;
 
-import io.realmit.edwige.api.dto.response.ServerStatsResponse;
-import io.realmit.edwige.api.service.ServerStatsService;
+import io.realmit.edwige.api.dto.responses.ServerStatsResponse;
+import io.realmit.edwige.api.services.ServerStatsService;
 
 final public class ServerStatsController {
 

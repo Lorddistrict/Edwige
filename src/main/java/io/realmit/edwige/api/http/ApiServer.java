@@ -1,13 +1,13 @@
 package io.realmit.edwige.api.http;
 
 import com.sun.net.httpserver.HttpServer;
-import io.realmit.edwige.api.controller.ServerStatsController;
+import io.realmit.edwige.api.controllers.ServerStatsController;
 import io.realmit.edwige.api.http.handlers.GiveItemHandler;
-import io.realmit.edwige.api.controller.GiveItemController;
+import io.realmit.edwige.api.controllers.GiveItemController;
 import io.realmit.edwige.api.http.handlers.ServerStatsHandler;
-import io.realmit.edwige.api.service.GiveItemService;
-import io.realmit.edwige.api.service.PendingItemStoreService;
-import io.realmit.edwige.api.service.ServerStatsService;
+import io.realmit.edwige.api.services.GiveItemService;
+import io.realmit.edwige.api.services.PendingItemStoreService;
+import io.realmit.edwige.api.services.ServerStatsService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.plugin.Plugin;
 

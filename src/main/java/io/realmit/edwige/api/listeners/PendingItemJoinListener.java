@@ -1,6 +1,6 @@
-package io.realmit.edwige.api.listener;
+package io.realmit.edwige.api.listeners;
 
-import io.realmit.edwige.api.service.PendingItemStoreService;
+import io.realmit.edwige.api.services.PendingItemStoreService;
 import io.realmit.edwige.services.MessageService;
 import io.realmit.edwige.services.PlayerActionsService;
 import org.bukkit.entity.Player;

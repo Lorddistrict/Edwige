@@ -1,6 +1,6 @@
 package io.realmit.edwige.services;
 
-import io.realmit.edwige.api.service.PendingItemStoreService;
+import io.realmit.edwige.api.services.PendingItemStoreService;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
