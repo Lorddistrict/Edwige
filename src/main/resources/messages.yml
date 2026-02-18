@@ -1,0 +1,11 @@
+prefix: "<yellow><bold>[Edwige]</bold></yellow> "
+
+messages:
+  redeem-error-missing-space: "You need <requiredInventorySize> available slot(s)."
+  redeem-error-available-slots: "Only <availablePlayerInventorySlots> available slot(s)."
+  redeem-success: "You have received your items !"
+  redeem-success-no-items: "There is no item(s) to redeem."
+  on-player-join-give-success: "You received <itemSize> stored item(s) while you were offline."
+  on-api-call-give-success: "You have successfully received your items !"
+  plugin-reloaded-success: "Plugin reloaded."
+  plugin-reloaded-error: "Incorrect command, use /edwige reload."

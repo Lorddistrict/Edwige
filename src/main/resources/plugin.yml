@@ -1,0 +1,15 @@
+name: Edwige
+version: '1.0-SNAPSHOT'
+main: io.realmit.edwige.Main
+api-version: '1.21'
+
+commands:
+  redeem:
+    description: Redeem items
+    usage: /redeem
+    permission: edwige.command.redeem
+
+permissions:
+  edwige.command.redeem:
+    description: Allows using /edwige:redeem
+    default: true
