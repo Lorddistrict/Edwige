@@ -7,7 +7,7 @@ public enum HttpMethods {
     HTTP_PATCH("PATCH"),
     HTTP_DELETE("DELETE");
 
-    final private String method;
+    private final String method;
 
     HttpMethods(String method) {
         this.method = method;

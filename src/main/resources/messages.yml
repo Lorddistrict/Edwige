@@ -9,3 +9,6 @@ messages:
   on-api-call-give-success: "You have successfully received your items !"
   plugin-reloaded-success: "Plugin reloaded."
   plugin-reloaded-error: "Incorrect command, use /edwige reload."
+  api-website-registration-notify-player: "Someone on the website try to register with your name. Is it you ?"
+  api-website-registration-player-answer-yes: "Everything is good ! You can go back on the website !"
+  api-website-registration-player-answer-no: "If it's not you, please contact an administrator."

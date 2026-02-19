@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-final public class HttpResponseUtils {
+public final class HttpResponseUtils {
 
     private HttpResponseUtils() {
     }

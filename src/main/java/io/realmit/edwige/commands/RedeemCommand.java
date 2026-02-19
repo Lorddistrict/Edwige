@@ -13,11 +13,11 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
-final public class RedeemCommand implements CommandExecutor {
+public final class RedeemCommand implements CommandExecutor {
 
-    final private MessageService messageService;
-    final private PendingItemStoreService pendingItemStoreService;
-    final private PlayerActionsService playerActionsService;
+    private final MessageService messageService;
+    private final PendingItemStoreService pendingItemStoreService;
+    private final PlayerActionsService playerActionsService;
 
     public RedeemCommand(
             MessageService messageService,

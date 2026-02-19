@@ -10,10 +10,10 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 
-final public class MessageService {
+public final class MessageService {
 
-    final private Plugin plugin;
-    final private MiniMessage mini = MiniMessage.miniMessage();
+    private final Plugin plugin;
+    private final MiniMessage mini = MiniMessage.miniMessage();
     private FileConfiguration config;
 
     public MessageService(Plugin plugin) {

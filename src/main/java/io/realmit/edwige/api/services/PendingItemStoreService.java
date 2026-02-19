@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-final public class PendingItemStoreService {
+public final class PendingItemStoreService {
 
-    final private Plugin plugin;
-    final private File file;
-    final private Map<UUID, List<ItemStack>> pending = new HashMap<>();
+    private final Plugin plugin;
+    private final File file;
+    private final Map<UUID, List<ItemStack>> pending = new HashMap<>();
 
     public PendingItemStoreService(Plugin plugin) {
         this.plugin = plugin;
@@ -29,7 +29,7 @@ final public class PendingItemStoreService {
     public synchronized List<ItemStack> getPendingItems(UUID playerId) {
         List<ItemStack> items = pending.get(playerId);
 
-        if (null == items || items.isEmpty()) {
+        if (items == null || items.isEmpty()) {
             plugin.getLogger().info("[getPendingItems] No pending items for " + playerId);
 
             return Collections.emptyList();

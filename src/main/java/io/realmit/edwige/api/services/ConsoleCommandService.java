@@ -14,13 +14,13 @@ public class ConsoleCommandService {
     }
 
     public void executeRequest(ConsoleCommandRequest request) {
-        if (null == request) {
+        if (request == null) {
             return;
         }
 
         String command = request.command();
 
-        if (null == command || command.isBlank()) {
+        if (command == null || command.isBlank()) {
             return;
         }
 

@@ -1,9 +1,11 @@
 package io.realmit.edwige;
 
 import io.realmit.edwige.api.http.ApiServer;
+import io.realmit.edwige.api.listeners.ChatQuestionListener;
 import io.realmit.edwige.api.listeners.PendingItemJoinListener;
 import io.realmit.edwige.api.services.PendingItemStoreService;
 import io.realmit.edwige.commands.RedeemCommand;
+import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import io.realmit.edwige.services.PlayerActionsService;
 import org.bukkit.Bukkit;
@@ -11,11 +13,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-final public class Main extends JavaPlugin {
+public final class Main extends JavaPlugin {
 
+    private ChatQuestionService chatQuestionService;
     private MessageService messageService;
     private PendingItemStoreService pendingItemStoreService;
     private PlayerActionsService playerActionsService;
+
+    private ChatQuestionListener chatQuestionListener;
     private PendingItemJoinListener pendingItemJoinListener;
 
     @Override
@@ -32,18 +37,19 @@ final public class Main extends JavaPlugin {
     }
 
     private void initServices() {
-        if (messageService == null) {
-            messageService = new MessageService(this);
-        } else {
-            messageService.reload();
-        }
-
+        messageService = new MessageService(this);
         pendingItemStoreService = new PendingItemStoreService(this);
         playerActionsService = new PlayerActionsService(pendingItemStoreService);
+        chatQuestionService = new ChatQuestionService(messageService, this);
     }
 
     private void initApi() {
-        ApiServer apiServer = new ApiServer(messageService, pendingItemStoreService, this, 8081);
+        ApiServer apiServer = new ApiServer(
+                chatQuestionService,
+                messageService,
+                this,
+                8081
+        );
 
         try {
             apiServer.start();
@@ -58,12 +64,13 @@ final public class Main extends JavaPlugin {
                 pendingItemStoreService,
                 playerActionsService
         );
+
+        chatQuestionListener = new ChatQuestionListener(chatQuestionService);
     }
 
     private void registerEvents() {
-        if (null != pendingItemStoreService) {
-            Bukkit.getPluginManager().registerEvents(pendingItemJoinListener, this);
-        }
+        Bukkit.getPluginManager().registerEvents(pendingItemJoinListener, this);
+        Bukkit.getPluginManager().registerEvents(chatQuestionListener, this);
     }
 
     private void registerCommands() {
@@ -80,12 +87,20 @@ final public class Main extends JavaPlugin {
 
     private PluginCommand checkCommand(String cmdName) {
         PluginCommand cmd = getCommand(cmdName);
-        if (null == cmd) {
+        if (cmd == null) {
             getLogger().severe(
                     "[checkCommand] Command 'edwige:" + cmdName + "' not found in plugin.yml, disabling plugin."
             );
         }
 
         return cmd;
+    }
+
+    public ChatQuestionService getConversationService() {
+        return chatQuestionService;
+    }
+
+    public MessageService getMessageService() {
+        return messageService;
     }
 }

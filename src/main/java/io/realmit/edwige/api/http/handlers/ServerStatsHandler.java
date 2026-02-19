@@ -12,9 +12,9 @@ import java.io.IOException;
 import static io.realmit.edwige.api.http.utils.HttpRequestUtils.validateRequestMethod;
 import static io.realmit.edwige.api.http.utils.HttpResponseUtils.sendJson;
 
-final public class ServerStatsHandler implements HttpHandler {
+public final class ServerStatsHandler implements HttpHandler {
 
-    final private ServerStatsController controller;
+    private final ServerStatsController controller;
 
     public ServerStatsHandler(ServerStatsController controller) {
         this.controller = controller;
