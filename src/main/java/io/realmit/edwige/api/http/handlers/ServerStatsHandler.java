@@ -26,7 +26,7 @@ public final class ServerStatsHandler implements HttpHandler {
             return;
         }
 
-        ServerStatsResponse serverStatsResponse = controller.handle();
+        ServerStatsResponse serverStatsResponse = controller.buildResponse();
 
         String json = """
         {

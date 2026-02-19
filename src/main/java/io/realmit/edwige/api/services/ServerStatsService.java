@@ -1,6 +1,7 @@
 package io.realmit.edwige.api.services;
 
 import io.realmit.edwige.api.dto.responses.ServerStatsResponse;
+import io.realmit.edwige.api.services.interfaces.ResponseBuilderServiceInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -11,12 +12,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ServerStatsService {
+public class ServerStatsService implements ResponseBuilderServiceInterface<ServerStatsResponse> {
 
     public ServerStatsService(
     ) {
     }
 
+    @Override
     public ServerStatsResponse buildResponse() {
         return new ServerStatsResponse(
                 getOnlineCount(),

@@ -3,13 +3,14 @@ package io.realmit.edwige.api.services;
 import io.realmit.edwige.api.callbacks.WebsiteCallbackClient;
 import io.realmit.edwige.api.dto.requests.WebsiteRegistrationRequest;
 import io.realmit.edwige.api.dto.responses.WebsiteRegistrationResponse;
+import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class WebsiteRegistrationService {
+public class WebsiteRegistrationService implements RequestHandlerServiceInterface<WebsiteRegistrationRequest> {
 
     private final ChatQuestionService chatQuestionService;
     private final MessageService messageService;
@@ -28,6 +29,7 @@ public class WebsiteRegistrationService {
         this.callbackClient = callbackClient;
     }
 
+    @Override
     public void handleRequest(WebsiteRegistrationRequest request) {
         if (request == null) {
             return;
