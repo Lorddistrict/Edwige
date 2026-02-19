@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.callbacks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.realmit.edwige.api.dto.responses.WebsiteRegistrationResponse;
+import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
 import org.bukkit.plugin.Plugin;
 
 import java.io.OutputStream;
@@ -22,7 +22,7 @@ public final class WebsiteCallbackClient {
         this.objectMapper = objectMapper;
     }
 
-    public void sendResponse(String callbackUrl, WebsiteRegistrationResponse response) {
+    public <R extends ResponseInterface<R>> void sendResponse(String callbackUrl, R response) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 URI uri = new URI(callbackUrl);
