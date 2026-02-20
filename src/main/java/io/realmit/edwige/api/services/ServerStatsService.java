@@ -1,5 +1,7 @@
 package io.realmit.edwige.api.services;
 
+import io.realmit.edwige.api.dto.responses.ServerStatsResponse;
+import io.realmit.edwige.api.services.interfaces.ResponseBuilderServiceInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -10,51 +12,63 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ServerStatsService {
+public class ServerStatsService implements ResponseBuilderServiceInterface<ServerStatsResponse> {
 
     public ServerStatsService(
     ) {
     }
 
-    public int getOnlineCount() {
+    @Override
+    public ServerStatsResponse buildResponse() {
+        return new ServerStatsResponse(
+                getOnlineCount(),
+                getOfflineCount(),
+                getMaxPlayers(),
+                isServerFull(),
+                getSerializedOnlinePlayerNames(),
+                getSerializedOfflinePlayerNames()
+        );
+    }
+
+    private int getOnlineCount() {
         return Bukkit.getOnlinePlayers().size();
     }
 
-    public int getOfflineCount() {
+    private int getOfflineCount() {
         return Bukkit.getOfflinePlayers().length - Bukkit.getOnlinePlayers().size();
     }
 
-    public int getMaxPlayers() {
+    private int getMaxPlayers() {
         return Bukkit.getMaxPlayers();
     }
 
-    public boolean isServerFull() {
+    private boolean isServerFull() {
         return getOnlineCount() >= getMaxPlayers();
     }
 
-    public Collection<? extends Player> getOnlinePlayers() {
+    private Collection<? extends Player> getOnlinePlayers() {
         return Bukkit.getOnlinePlayers();
     }
 
-    public List<String> getOnlinePlayerNames() {
+    private List<String> getOnlinePlayerNames() {
         return getOnlinePlayers()
                 .stream()
                 .map(Player::getName)
                 .toList();
     }
 
-    public String getSerializedOnlinePlayerNames() {
+    private String getSerializedOnlinePlayerNames() {
         return getOnlinePlayerNames()
                 .stream()
                 .map(name -> "\"" + name.replace("\"", "\\\"") + "\"")
                 .collect(Collectors.joining(",", "[", "]"));
     }
 
-    public OfflinePlayer[] getOfflinePlayers() {
+    private OfflinePlayer[] getOfflinePlayers() {
         return Bukkit.getOfflinePlayers();
     }
 
-    public List<String> getOfflinePlayerNames() {
+    private List<String> getOfflinePlayerNames() {
         List<String> offlinePlayerNames = Arrays.stream(getOfflinePlayers())
                 .map(OfflinePlayer::getName)
                 .filter(Objects::nonNull)
@@ -65,7 +79,7 @@ public class ServerStatsService {
         return offlinePlayerNames;
     }
 
-    public String getSerializedOfflinePlayerNames() {
+    private String getSerializedOfflinePlayerNames() {
         return getOfflinePlayerNames()
                 .stream()
                 .map(name -> "\"" + name.replace("\"", "\\\"") + "\"")

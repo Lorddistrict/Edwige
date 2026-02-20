@@ -9,12 +9,12 @@ import io.realmit.edwige.api.http.enums.HttpStatus;
 
 import java.io.IOException;
 
-import static io.realmit.edwige.api.http.utils.HttpRequestUtils.validateRequestMethod;
-import static io.realmit.edwige.api.http.utils.HttpResponseUtils.sendJson;
+import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
+import static io.realmit.edwige.api.http.utils.JsonUtils.sendJson;
 
-final public class ServerStatsHandler implements HttpHandler {
+public final class ServerStatsHandler implements HttpHandler {
 
-    final private ServerStatsController controller;
+    private final ServerStatsController controller;
 
     public ServerStatsHandler(ServerStatsController controller) {
         this.controller = controller;
@@ -26,9 +26,9 @@ final public class ServerStatsHandler implements HttpHandler {
             return;
         }
 
-        ServerStatsResponse serverStatsResponse = controller.handle();
+        ServerStatsResponse serverStatsResponse = controller.buildResponse();
 
-        String json = """
+        sendJson(exchange, HttpStatus.HTTP_OK, """
         {
           "onlineCount": %d,
           "offlineCount": %d,
@@ -44,8 +44,6 @@ final public class ServerStatsHandler implements HttpHandler {
                 serverStatsResponse.serverFull(),
                 serverStatsResponse.onlinePlayers(),
                 serverStatsResponse.offlinePlayers()
-        );
-
-        sendJson(exchange, HttpStatus.HTTP_OK.code(), json);
+        ));
     }
 }

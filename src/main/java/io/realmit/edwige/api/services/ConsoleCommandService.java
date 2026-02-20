@@ -1,11 +1,12 @@
 package io.realmit.edwige.api.services;
 
 import io.realmit.edwige.api.dto.requests.ConsoleCommandRequest;
+import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 
-public class ConsoleCommandService {
+public class ConsoleCommandService implements RequestHandlerServiceInterface<ConsoleCommandRequest> {
 
     private final Plugin plugin;
 
@@ -13,14 +14,15 @@ public class ConsoleCommandService {
         this.plugin = plugin;
     }
 
-    public void executeRequest(ConsoleCommandRequest request) {
-        if (null == request) {
+    @Override
+    public void handleRequest(ConsoleCommandRequest request) {
+        if (request == null) {
             return;
         }
 
         String command = request.command();
 
-        if (null == command || command.isBlank()) {
+        if (command == null || command.isBlank()) {
             return;
         }
 

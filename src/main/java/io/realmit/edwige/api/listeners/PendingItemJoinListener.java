@@ -11,11 +11,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-final public class PendingItemJoinListener implements Listener {
+public final class PendingItemJoinListener implements Listener {
 
-    final private MessageService messageService;
-    final private PendingItemStoreService pendingItemStoreService;
-    final private PlayerActionsService playerActionsService;
+    private final MessageService messageService;
+    private final PendingItemStoreService pendingItemStoreService;
+    private final PlayerActionsService playerActionsService;
 
     public PendingItemJoinListener(
             MessageService messageService,
@@ -49,7 +49,8 @@ final public class PendingItemJoinListener implements Listener {
                 player,
                 "on-player-join-give-success",
                 "<itemSize>",
-                String.valueOf(items.size())
+                String.valueOf(items.size()),
+                true
         );
     }
 }

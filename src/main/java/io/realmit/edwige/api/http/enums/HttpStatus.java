@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.http.enums;
 
 public enum HttpStatus {
-    HTTP_OK(200, "OK"),
+    HTTP_OK(200, "Ok"),
     HTTP_CREATED(201, "Created"),
     HTTP_NO_CONTENT(204, "No Content"),
     HTTP_BAD_REQUEST(400, "Bad Request"),
@@ -11,8 +11,8 @@ public enum HttpStatus {
     HTTP_METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
     HTTP_INTERNAL_SERVER_ERROR(500, "Internal Server Error");
 
-    final private int code;
-    final private String reason;
+    private final int code;
+    private final String reason;
 
     HttpStatus(int code, String reason) {
         this.code = code;

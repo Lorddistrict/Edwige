@@ -2,7 +2,7 @@ package io.realmit.edwige.api.http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.realmit.edwige.api.controllers.requests.ConsoleCommandController;
+import io.realmit.edwige.api.controllers.ConsoleCommandController;
 import io.realmit.edwige.api.dto.requests.ConsoleCommandRequest;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
@@ -12,7 +12,7 @@ import io.realmit.edwige.api.http.utils.JsonUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static io.realmit.edwige.api.http.utils.HttpRequestUtils.validateRequestMethod;
+import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
 
 public class ConsoleCommandHandler implements HttpHandler {
 
@@ -30,9 +30,8 @@ public class ConsoleCommandHandler implements HttpHandler {
 
         String contentType = exchange.getRequestHeaders().getFirst("Content-Type");
 
-        if (null == contentType || !contentType.startsWith("application/json")) {
+        if (contentType == null || !contentType.startsWith("application/json")) {
             exchange.sendResponseHeaders(HttpStatus.HTTP_BAD_REQUEST.code(), -1);
-
             return;
         }
 
@@ -42,7 +41,6 @@ public class ConsoleCommandHandler implements HttpHandler {
             request = JsonMapper.fromJson(JsonUtils.readBody(exchange), ConsoleCommandRequest.class);
         } catch (IllegalArgumentException e) {
             exchange.sendResponseHeaders(HttpStatus.HTTP_BAD_REQUEST.code(), -1);
-
             return;
         }
 

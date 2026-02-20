@@ -3,7 +3,7 @@ package io.realmit.edwige.api.http.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 
-final public class JsonMapper {
+public final class JsonMapper {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().configure(
             DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,

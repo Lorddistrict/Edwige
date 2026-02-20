@@ -13,11 +13,11 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
-final public class RedeemCommand implements CommandExecutor {
+public final class RedeemCommand implements CommandExecutor {
 
-    final private MessageService messageService;
-    final private PendingItemStoreService pendingItemStoreService;
-    final private PlayerActionsService playerActionsService;
+    private final MessageService messageService;
+    private final PendingItemStoreService pendingItemStoreService;
+    private final PlayerActionsService playerActionsService;
 
     public RedeemCommand(
             MessageService messageService,
@@ -48,7 +48,8 @@ final public class RedeemCommand implements CommandExecutor {
                     player,
                     "redeem-error-missing-space",
                     "<requiredInventorySize>",
-                    stringifiedSize
+                    stringifiedSize,
+                    true
             );
 
             int availablePlayerInventorySlots = playerActionsService.getPlayerAvailableSlots(player);
@@ -57,7 +58,8 @@ final public class RedeemCommand implements CommandExecutor {
                     player,
                     "redeem-error-available-slots",
                     "<availablePlayerInventorySlots>",
-                    stringifiedSize
+                    stringifiedSize,
+                    true
             );
 
             return true;
@@ -66,7 +68,7 @@ final public class RedeemCommand implements CommandExecutor {
         List<ItemStack> items = pendingItemStoreService.consumePendingItems(player.getUniqueId());
 
         if (items.isEmpty()) {
-            messageService.send(player, "redeem-success-no-items");
+            messageService.send(player, "redeem-success-no-items", true);
             return true;
         }
 
@@ -74,7 +76,7 @@ final public class RedeemCommand implements CommandExecutor {
             player.getInventory().addItem(item);
         }
 
-        messageService.send(player, "redeem-success");
+        messageService.send(player, "redeem-success", true);
 
         return true;
     }

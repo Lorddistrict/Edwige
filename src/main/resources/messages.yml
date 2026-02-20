@@ -6,6 +6,32 @@ messages:
   redeem-success: "You have received your items !"
   redeem-success-no-items: "There is no item(s) to redeem."
   on-player-join-give-success: "You received <itemSize> stored item(s) while you were offline."
-  on-api-call-give-success: "You have successfully received your items !"
-  plugin-reloaded-success: "Plugin reloaded."
-  plugin-reloaded-error: "Incorrect command, use /edwige reload."
+  global:
+    separator: "<gold>-----------------------------------------------------</gold>"
+    backlines:
+      x1: "\n"
+      x2: "\n\n"
+      x3: "\n\n\n"
+      x4: "\n\n\n\n"
+    yes: "yes"
+    no: "no"
+  api:
+    website:
+      registration:
+        title: "Account Registration Request"
+        question: "A website registration was attempted for your account."
+        prefix:
+          0: "Email: "
+          1: "IP Address: "
+          2: "Do you want to allow this registration ?"
+          3: "You have "
+          4: " seconds to respond."
+        buttons:
+          confirm: "CONFIRM"
+          deny: "DENY"
+        answers:
+          confirm: "Everything is good ! You can go back on the website !"
+          deny: "If it's not you, please contact an administrator."
+  symbols:
+    check: "✔"
+    cross: "✖"
