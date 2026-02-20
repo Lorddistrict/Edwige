@@ -32,39 +32,53 @@ public final class MessageService {
         config = YamlConfiguration.loadConfiguration(file);
     }
 
-    private String rawPrefix() {
+    public String rawPrefix() {
         return config.getString("prefix", "<yellow><bold>[Edwige]</bold></yellow> ");
     }
 
-    private String rawMessage(String key) {
+    public String getMessageFromKey(String key) {
         return config.getString("messages." + key, "<red>Missing message key: " + key + "</red>");
     }
 
-    public Component message(String key) {
-        String raw = rawPrefix() + rawMessage(key);
+    public Component message(String key, boolean displayPluginName) {
+        String raw = getMessageFromKey(key);
+
+        if (displayPluginName) {
+            raw = rawPrefix() + raw;
+        }
 
         return mini.deserialize(raw);
     }
 
-    public Component message(String key, String placeholder, String value) {
-        String raw = rawPrefix() + rawMessage(key).replace(placeholder, value);
+    public Component message(String key, String placeholder, String value, boolean displayPluginName) {
+        String raw = rawPrefix() + getMessageFromKey(key).replace(placeholder, value);
+
+        if (!displayPluginName) {
+            raw = getMessageFromKey(key).replace(placeholder, value);
+        }
 
         return mini.deserialize(raw);
     }
 
-    public void send(Player player, String key) {
-        player.sendMessage(message(key));
+    public void clearPlayerChat(Player player) {
+        for (int i = 0; i < 20; i++) {
+            player.sendMessage("");
+        }
     }
 
-    public void send(Player player, String key, String placeholder, String value) {
-        player.sendMessage(message(key, placeholder, value));
+    public void send(Player player, String key, boolean displayPluginName) {
+        player.sendMessage(message(key, displayPluginName));
     }
 
-    public void send(CommandSender sender, String key) {
-        sender.sendMessage(message(key));
+    public void send(Player player, String key, String placeholder, String value, boolean displayPluginName) {
+        player.sendMessage(message(key, placeholder, value, displayPluginName));
     }
 
-    public void send(CommandSender sender, String key, String placeholder, String value) {
-        sender.sendMessage(message(key, placeholder, value));
+    public void send(CommandSender sender, String key, boolean displayPluginName) {
+        sender.sendMessage(message(key, displayPluginName));
+    }
+
+    public void send(CommandSender sender, String key, String placeholder, String value, boolean displayPluginName) {
+        sender.sendMessage(message(key, placeholder, value, displayPluginName));
     }
 }

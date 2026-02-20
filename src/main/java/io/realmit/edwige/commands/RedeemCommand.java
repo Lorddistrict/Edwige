@@ -48,7 +48,8 @@ public final class RedeemCommand implements CommandExecutor {
                     player,
                     "redeem-error-missing-space",
                     "<requiredInventorySize>",
-                    stringifiedSize
+                    stringifiedSize,
+                    true
             );
 
             int availablePlayerInventorySlots = playerActionsService.getPlayerAvailableSlots(player);
@@ -57,7 +58,8 @@ public final class RedeemCommand implements CommandExecutor {
                     player,
                     "redeem-error-available-slots",
                     "<availablePlayerInventorySlots>",
-                    stringifiedSize
+                    stringifiedSize,
+                    true
             );
 
             return true;
@@ -66,7 +68,7 @@ public final class RedeemCommand implements CommandExecutor {
         List<ItemStack> items = pendingItemStoreService.consumePendingItems(player.getUniqueId());
 
         if (items.isEmpty()) {
-            messageService.send(player, "redeem-success-no-items");
+            messageService.send(player, "redeem-success-no-items", true);
             return true;
         }
 
@@ -74,7 +76,7 @@ public final class RedeemCommand implements CommandExecutor {
             player.getInventory().addItem(item);
         }
 
-        messageService.send(player, "redeem-success");
+        messageService.send(player, "redeem-success", true);
 
         return true;
     }

@@ -48,7 +48,7 @@ public final class Main extends JavaPlugin {
                 chatQuestionService,
                 messageService,
                 this,
-                8081
+                8082
         );
 
         try {

@@ -6,5 +6,6 @@ public record WebsiteRegistrationRequest(
         String username,
         String email,
         String ip,
+        int timeout,
         String callbackUrl
 ) implements RequestInterface<WebsiteRegistrationRequest> {}

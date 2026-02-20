@@ -49,7 +49,8 @@ public final class PendingItemJoinListener implements Listener {
                 player,
                 "on-player-join-give-success",
                 "<itemSize>",
-                String.valueOf(items.size())
+                String.valueOf(items.size()),
+                true
         );
     }
 }
