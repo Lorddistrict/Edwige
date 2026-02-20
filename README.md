@@ -22,12 +22,12 @@ interactive chat-based verifications.
 
 Built-in HTTP server with **Bearer Token authentication** for secure external integrations.
 
-```
+```mermaid
 graph LR
-    A -- [External Service] -- [POST] /api/validate-registration"--> B [API Server]
-    A --[POST] /api/execute --> B
-    A --[GET] /api/info--> B
-    B --Bearer Token--> A
+    A[External Service] --"POST /api/validate-registration"--> B[API Server]
+    A --"POST /api/execute"--> B
+    A --"GET /api/info"--> B
+    B --"Bearer Token"--> A
 ```
 
 #### API Endpoints
@@ -73,6 +73,23 @@ sequenceDiagram
 - **Persistent storage** in `pending-items.yml`
 
 ---
+
+### ✅ Interactive Player Verification
+
+In-game Yes/No chat prompts for player verifications (e.g., website registration).
+
+```mermaid
+sequenceDiagram
+    participant Website
+    participant API
+    participant Player
+    participant Server
+    
+    Website->>API: POST /validate-registration
+    API->>Player: Send Yes/No prompt
+    Player->>Server: Click CONFIRM/DENY
+    Server->>Website: Callback with result
+```
 
 #### Flow:
 
