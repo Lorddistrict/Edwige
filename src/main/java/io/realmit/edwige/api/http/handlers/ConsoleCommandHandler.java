@@ -12,7 +12,7 @@ import io.realmit.edwige.api.http.utils.JsonUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import static io.realmit.edwige.api.http.utils.HttpRequestUtils.validateRequestMethod;
+import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
 
 public class ConsoleCommandHandler implements HttpHandler {
 

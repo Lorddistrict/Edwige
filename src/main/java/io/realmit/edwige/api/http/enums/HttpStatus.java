@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.http.enums;
 
 public enum HttpStatus {
-    HTTP_OK(200, "OK"),
+    HTTP_OK(200, "Ok"),
     HTTP_CREATED(201, "Created"),
     HTTP_NO_CONTENT(204, "No Content"),
     HTTP_BAD_REQUEST(400, "Bad Request"),
