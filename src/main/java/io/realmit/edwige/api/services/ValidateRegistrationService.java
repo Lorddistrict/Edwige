@@ -1,8 +1,8 @@
 package io.realmit.edwige.api.services;
 
-import io.realmit.edwige.api.callbacks.WebsiteCallbackClient;
-import io.realmit.edwige.api.dto.requests.WebsiteRegistrationRequest;
-import io.realmit.edwige.api.dto.responses.WebsiteRegistrationResponse;
+import io.realmit.edwige.api.callbacks.ValidateRegistrationCallbackClient;
+import io.realmit.edwige.api.dto.requests.ValidateRegistrationRequest;
+import io.realmit.edwige.api.dto.responses.ValidateRegistrationResponse;
 import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
@@ -12,18 +12,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class WebsiteRegistrationService implements RequestHandlerServiceInterface<WebsiteRegistrationRequest> {
+public class ValidateRegistrationService implements RequestHandlerServiceInterface<ValidateRegistrationRequest> {
 
     private final ChatQuestionService chatQuestionService;
     private final MessageService messageService;
     private final Plugin plugin;
-    private final WebsiteCallbackClient callbackClient;
+    private final ValidateRegistrationCallbackClient callbackClient;
 
-    public WebsiteRegistrationService(
+    public ValidateRegistrationService(
             ChatQuestionService chatQuestionService,
             MessageService messageService,
             Plugin plugin,
-            WebsiteCallbackClient callbackClient
+            ValidateRegistrationCallbackClient callbackClient
     ) {
         this.chatQuestionService = chatQuestionService;
         this.messageService = messageService;
@@ -32,7 +32,7 @@ public class WebsiteRegistrationService implements RequestHandlerServiceInterfac
     }
 
     @Override
-    public void handleRequest(WebsiteRegistrationRequest request) {
+    public void handleRequest(ValidateRegistrationRequest request) {
         if (request == null) {
             return;
         }
@@ -97,7 +97,7 @@ public class WebsiteRegistrationService implements RequestHandlerServiceInterfac
                                 .build()
                         );
 
-                        callbackClient.sendResponse(request.callbackUrl(), new WebsiteRegistrationResponse(answer));
+                        callbackClient.sendResponse(request.callbackUrl(), new ValidateRegistrationResponse(answer));
                     }
             );
         });

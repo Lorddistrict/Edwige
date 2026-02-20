@@ -2,8 +2,8 @@ package io.realmit.edwige.api.http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.realmit.edwige.api.controllers.ServerStatsController;
-import io.realmit.edwige.api.dto.responses.ServerStatsResponse;
+import io.realmit.edwige.api.controllers.InfoController;
+import io.realmit.edwige.api.dto.responses.InfoResponse;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
 
@@ -12,11 +12,11 @@ import java.io.IOException;
 import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
 import static io.realmit.edwige.api.http.utils.JsonUtils.sendJson;
 
-public final class ServerStatsHandler implements HttpHandler {
+public final class InfoHandler implements HttpHandler {
 
-    private final ServerStatsController controller;
+    private final InfoController controller;
 
-    public ServerStatsHandler(ServerStatsController controller) {
+    public InfoHandler(InfoController controller) {
         this.controller = controller;
     }
 
@@ -26,24 +26,26 @@ public final class ServerStatsHandler implements HttpHandler {
             return;
         }
 
-        ServerStatsResponse serverStatsResponse = controller.buildResponse();
+        InfoResponse infoResponse = controller.buildResponse();
 
         sendJson(exchange, HttpStatus.HTTP_OK, """
         {
-          "onlineCount": %d,
+          "playerCount": %d,
           "offlineCount": %d,
           "maxPlayers": %s,
           "serverFull": %s,
+          "serverVersion": %s,
           "onlinePlayers": %s,
           "offlinePlayers": %s
         }
         """.formatted(
-                serverStatsResponse.onlineCount(),
-                serverStatsResponse.offlineCount(),
-                serverStatsResponse.maxPlayers(),
-                serverStatsResponse.serverFull(),
-                serverStatsResponse.onlinePlayers(),
-                serverStatsResponse.offlinePlayers()
+                infoResponse.onlineCount(),
+                infoResponse.offlineCount(),
+                infoResponse.maxPlayers(),
+                infoResponse.serverFull(),
+                infoResponse.serverVersion(),
+                infoResponse.onlinePlayers(),
+                infoResponse.offlinePlayers()
         ));
     }
 }

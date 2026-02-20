@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.services;
 
-import io.realmit.edwige.api.dto.responses.ServerStatsResponse;
+import io.realmit.edwige.api.dto.responses.InfoResponse;
 import io.realmit.edwige.api.services.interfaces.ResponseBuilderServiceInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -12,19 +12,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ServerStatsService implements ResponseBuilderServiceInterface<ServerStatsResponse> {
+public class InfoService implements ResponseBuilderServiceInterface<InfoResponse> {
 
-    public ServerStatsService(
+    public InfoService(
     ) {
     }
 
     @Override
-    public ServerStatsResponse buildResponse() {
-        return new ServerStatsResponse(
+    public InfoResponse buildResponse() {
+        return new InfoResponse(
                 getOnlineCount(),
                 getOfflineCount(),
                 getMaxPlayers(),
                 isServerFull(),
+                getServerVersion(),
                 getSerializedOnlinePlayerNames(),
                 getSerializedOfflinePlayerNames()
         );
@@ -84,5 +85,9 @@ public class ServerStatsService implements ResponseBuilderServiceInterface<Serve
                 .stream()
                 .map(name -> "\"" + name.replace("\"", "\\\"") + "\"")
                 .collect(Collectors.joining(",", "[", "]"));
+    }
+
+    private String getServerVersion() {
+        return Bukkit.getVersion();
     }
 }

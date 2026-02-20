@@ -9,12 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-public final class WebsiteCallbackClient {
+public final class ValidateRegistrationCallbackClient {
 
     private final Plugin plugin;
     private final ObjectMapper objectMapper;
 
-    public WebsiteCallbackClient(
+    public ValidateRegistrationCallbackClient(
             Plugin plugin,
             ObjectMapper objectMapper
     ) {

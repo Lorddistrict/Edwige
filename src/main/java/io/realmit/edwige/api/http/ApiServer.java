@@ -2,16 +2,16 @@ package io.realmit.edwige.api.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
-import io.realmit.edwige.api.callbacks.WebsiteCallbackClient;
+import io.realmit.edwige.api.callbacks.ValidateRegistrationCallbackClient;
 import io.realmit.edwige.api.controllers.ConsoleCommandController;
-import io.realmit.edwige.api.controllers.ServerStatsController;
-import io.realmit.edwige.api.controllers.WebsiteRegistrationController;
+import io.realmit.edwige.api.controllers.InfoController;
+import io.realmit.edwige.api.controllers.ValidateRegistrationController;
 import io.realmit.edwige.api.http.handlers.ConsoleCommandHandler;
-import io.realmit.edwige.api.http.handlers.ServerStatsHandler;
-import io.realmit.edwige.api.http.handlers.WebsiteRegistrationHandler;
+import io.realmit.edwige.api.http.handlers.InfoHandler;
+import io.realmit.edwige.api.http.handlers.ValidateRegistrationHandler;
 import io.realmit.edwige.api.services.ConsoleCommandService;
-import io.realmit.edwige.api.services.ServerStatsService;
-import io.realmit.edwige.api.services.WebsiteRegistrationService;
+import io.realmit.edwige.api.services.InfoService;
+import io.realmit.edwige.api.services.ValidateRegistrationService;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.plugin.Plugin;
@@ -28,21 +28,21 @@ public final class ApiServer {
     private final int port;
     private HttpServer server;
 
-    private WebsiteCallbackClient websiteCallbackClient;
+    private ValidateRegistrationCallbackClient validateRegistrationCallbackClient;
 
     private ConsoleCommandController consoleCommandController;
-    private ServerStatsController serverInfoController;
-    private WebsiteRegistrationController websiteRegistrationController;
+    private InfoController serverInfoController;
+    private ValidateRegistrationController validateRegistrationController;
 
     private ConsoleCommandHandler consoleCommandHandler;
-    private ServerStatsHandler serverInfoHandler;
-    private WebsiteRegistrationHandler websiteRegistrationHandler;
+    private InfoHandler serverInfoHandler;
+    private ValidateRegistrationHandler validateRegistrationHandler;
 
     private ConsoleCommandService consoleCommandService;
     private ChatQuestionService chatQuestionService;
     private MessageService messageService;
-    private ServerStatsService serverInfoService;
-    private WebsiteRegistrationService websiteRegistrationService;
+    private InfoService serverInfoService;
+    private ValidateRegistrationService validateRegistrationService;
 
     public ApiServer(
             ChatQuestionService chatQuestionService,
@@ -74,36 +74,36 @@ public final class ApiServer {
     }
 
     private void initCallbacks() {
-        websiteCallbackClient = new WebsiteCallbackClient(plugin, new ObjectMapper());
+        validateRegistrationCallbackClient = new ValidateRegistrationCallbackClient(plugin, new ObjectMapper());
     }
 
     private void initServices() {
-        serverInfoService = new ServerStatsService();
+        serverInfoService = new InfoService();
         consoleCommandService = new ConsoleCommandService(plugin);
-        websiteRegistrationService = new WebsiteRegistrationService(
+        validateRegistrationService = new ValidateRegistrationService(
                 chatQuestionService,
                 messageService,
                 plugin,
-                websiteCallbackClient
+                validateRegistrationCallbackClient
         );
     }
 
     private void initControllers() {
-        serverInfoController = new ServerStatsController(serverInfoService);
+        serverInfoController = new InfoController(serverInfoService);
         consoleCommandController = new ConsoleCommandController(consoleCommandService);
-        websiteRegistrationController = new WebsiteRegistrationController(websiteRegistrationService);
+        validateRegistrationController = new ValidateRegistrationController(validateRegistrationService);
     }
 
     private void initHandlers() {
-        serverInfoHandler = new ServerStatsHandler(serverInfoController);
+        serverInfoHandler = new InfoHandler(serverInfoController);
         consoleCommandHandler = new ConsoleCommandHandler(consoleCommandController);
-        websiteRegistrationHandler = new WebsiteRegistrationHandler(websiteRegistrationController);
+        validateRegistrationHandler = new ValidateRegistrationHandler(validateRegistrationController);
     }
 
     private void initEndpoints() {
-        server.createContext("/api/server", serverInfoHandler);
+        server.createContext("/api/info", serverInfoHandler);
         server.createContext("/api/execute", consoleCommandHandler);
-        server.createContext("/api/validate-registration", websiteRegistrationHandler);
+        server.createContext("/api/validate-registration", validateRegistrationHandler);
     }
 
     public void stop() {

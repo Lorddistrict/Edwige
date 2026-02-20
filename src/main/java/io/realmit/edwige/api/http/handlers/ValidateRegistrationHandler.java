@@ -2,8 +2,8 @@ package io.realmit.edwige.api.http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.realmit.edwige.api.controllers.WebsiteRegistrationController;
-import io.realmit.edwige.api.dto.requests.WebsiteRegistrationRequest;
+import io.realmit.edwige.api.controllers.ValidateRegistrationController;
+import io.realmit.edwige.api.dto.requests.ValidateRegistrationRequest;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
 import io.realmit.edwige.api.http.utils.JsonMapper;
@@ -14,11 +14,11 @@ import java.io.IOException;
 import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
 import static io.realmit.edwige.api.http.utils.JsonUtils.sendJsonMessage;
 
-public class WebsiteRegistrationHandler implements HttpHandler {
+public class ValidateRegistrationHandler implements HttpHandler {
 
-    private final WebsiteRegistrationController controller;
+    private final ValidateRegistrationController controller;
 
-    public WebsiteRegistrationHandler(WebsiteRegistrationController controller) {
+    public ValidateRegistrationHandler(ValidateRegistrationController controller) {
         this.controller = controller;
     }
 
@@ -36,10 +36,10 @@ public class WebsiteRegistrationHandler implements HttpHandler {
             return;
         }
 
-        WebsiteRegistrationRequest request;
+        ValidateRegistrationRequest request;
 
         try {
-            request = JsonMapper.fromJson(JsonUtils.readBody(exchange), WebsiteRegistrationRequest.class);
+            request = JsonMapper.fromJson(JsonUtils.readBody(exchange), ValidateRegistrationRequest.class);
         } catch (IllegalArgumentException e) {
             sendJsonMessage(exchange, HttpStatus.HTTP_BAD_REQUEST, HttpStatus.HTTP_BAD_REQUEST.reason());
             return;
@@ -51,7 +51,7 @@ public class WebsiteRegistrationHandler implements HttpHandler {
         sendJsonMessage(exchange, HttpStatus.HTTP_OK, HttpStatus.HTTP_OK.reason());
     }
 
-    private void validateRequest(HttpExchange exchange, WebsiteRegistrationRequest request) throws IOException {
+    private void validateRequest(HttpExchange exchange, ValidateRegistrationRequest request) throws IOException {
         if (request.username() == null) {
             sendJsonMessage(exchange, HttpStatus.HTTP_BAD_REQUEST, "Username cannot be null");
             return;

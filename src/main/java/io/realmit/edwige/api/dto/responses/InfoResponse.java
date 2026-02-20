@@ -2,11 +2,12 @@ package io.realmit.edwige.api.dto.responses;
 
 import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
 
-public record ServerStatsResponse (
+public record InfoResponse(
     int onlineCount,
     int offlineCount,
     int maxPlayers,
     boolean serverFull,
+    String serverVersion,
     String onlinePlayers,
     String offlinePlayers
-) implements ResponseInterface<ServerStatsResponse> {}
+) implements ResponseInterface<InfoResponse> {}
