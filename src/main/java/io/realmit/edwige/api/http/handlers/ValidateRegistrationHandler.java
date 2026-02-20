@@ -6,20 +6,26 @@ import io.realmit.edwige.api.controllers.ValidateRegistrationController;
 import io.realmit.edwige.api.dto.requests.ValidateRegistrationRequest;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
+import io.realmit.edwige.api.http.utils.HttpUtils;
 import io.realmit.edwige.api.http.utils.JsonMapper;
 import io.realmit.edwige.api.http.utils.JsonUtils;
 
 import java.io.IOException;
 
 import static io.realmit.edwige.api.http.utils.HttpUtils.validateRequestMethod;
-import static io.realmit.edwige.api.http.utils.JsonUtils.sendJsonMessage;
+import static io.realmit.edwige.api.http.utils.JsonUtils.*;
 
 public class ValidateRegistrationHandler implements HttpHandler {
 
     private final ValidateRegistrationController controller;
+    private final String bearerToken;
 
-    public ValidateRegistrationHandler(ValidateRegistrationController controller) {
+    public ValidateRegistrationHandler(
+            ValidateRegistrationController controller,
+            String bearerToken
+    ) {
         this.controller = controller;
+        this.bearerToken = bearerToken;
     }
 
     @Override
@@ -29,9 +35,13 @@ public class ValidateRegistrationHandler implements HttpHandler {
             return;
         }
 
-        String contentType = exchange.getRequestHeaders().getFirst("Content-Type");
+        if (!HttpUtils.validateBearerToken(exchange, bearerToken)) {
+            return;
+        }
 
-        if (contentType == null || !contentType.startsWith("application/json")) {
+        String contentType = exchange.getRequestHeaders().getFirst(HEADER_KEY_CONTENT_TYPE);
+
+        if (contentType == null || !contentType.startsWith(HEADER_VALUE_JSON)) {
             sendJsonMessage(exchange, HttpStatus.HTTP_BAD_REQUEST, HttpStatus.HTTP_BAD_REQUEST.reason());
             return;
         }

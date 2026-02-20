@@ -6,6 +6,7 @@ import io.realmit.edwige.api.controllers.InfoController;
 import io.realmit.edwige.api.dto.responses.InfoResponse;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
+import io.realmit.edwige.api.http.utils.HttpUtils;
 
 import java.io.IOException;
 
@@ -15,14 +16,23 @@ import static io.realmit.edwige.api.http.utils.JsonUtils.sendJson;
 public final class InfoHandler implements HttpHandler {
 
     private final InfoController controller;
+    private final String bearerToken;
 
-    public InfoHandler(InfoController controller) {
+    public InfoHandler(
+            InfoController controller,
+            String bearerToken
+    ) {
         this.controller = controller;
+        this.bearerToken = bearerToken;
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if (!validateRequestMethod(exchange, HttpMethods.HTTP_GET.method())) {
+            return;
+        }
+
+        if (!HttpUtils.validateBearerToken(exchange, bearerToken)) {
             return;
         }
 

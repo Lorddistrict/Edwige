@@ -11,8 +11,10 @@ import java.nio.charset.StandardCharsets;
 
 public final class JsonUtils {
 
-    private static final String HEADER_KEY_CONTENT_TYPE = "Content-Type";
-    private static final String HEADER_VALUE_JSON = "application/json; charset=utf-8";
+    public static final String HEADER_KEY_CONTENT_TYPE = "Content-Type";
+    public static final String HEADER_VALUE_JSON = "application/json";
+    public static final String HEADER_VALUE_CHARSET_UTF8 = "charset=utf-8";
+    public static final String HEADER_VALUE_JSON_CHARSET_UTF8 = HEADER_VALUE_JSON+"; "+HEADER_VALUE_CHARSET_UTF8;
 
     public static String readBody(HttpExchange exchange) throws IOException {
         try (InputStream in = exchange.getRequestBody()) {
@@ -26,7 +28,7 @@ public final class JsonUtils {
     public static void sendJson(HttpExchange exchange, HttpStatus status, String jsonBody) throws IOException {
         byte[] bytes = jsonBody.getBytes(StandardCharsets.UTF_8);
 
-        exchange.getResponseHeaders().set(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_JSON);
+        exchange.getResponseHeaders().set(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_JSON_CHARSET_UTF8);
         exchange.sendResponseHeaders(status.code(), bytes.length);
 
         try (OutputStream os = exchange.getResponseBody()) {

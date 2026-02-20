@@ -26,6 +26,7 @@ public final class ApiServer {
     private ExecutorService executor;
     private final Plugin plugin;
     private final int port;
+    private final String bearerToken;
     private HttpServer server;
 
     private ValidateRegistrationCallbackClient validateRegistrationCallbackClient;
@@ -39,8 +40,8 @@ public final class ApiServer {
     private ValidateRegistrationHandler validateRegistrationHandler;
 
     private ConsoleCommandService consoleCommandService;
-    private ChatQuestionService chatQuestionService;
-    private MessageService messageService;
+    private final ChatQuestionService chatQuestionService;
+    private final MessageService messageService;
     private InfoService serverInfoService;
     private ValidateRegistrationService validateRegistrationService;
 
@@ -48,12 +49,14 @@ public final class ApiServer {
             ChatQuestionService chatQuestionService,
             MessageService messageService,
             Plugin plugin,
-            int port
+            int port,
+            String bearerToken
     ) {
         this.chatQuestionService = chatQuestionService;
         this.messageService = messageService;
         this.plugin = plugin;
         this.port = port;
+        this.bearerToken = bearerToken;
     }
 
     public void start() throws IOException {
@@ -95,9 +98,9 @@ public final class ApiServer {
     }
 
     private void initHandlers() {
-        serverInfoHandler = new InfoHandler(serverInfoController);
-        consoleCommandHandler = new ConsoleCommandHandler(consoleCommandController);
-        validateRegistrationHandler = new ValidateRegistrationHandler(validateRegistrationController);
+        serverInfoHandler = new InfoHandler(serverInfoController, bearerToken);
+        consoleCommandHandler = new ConsoleCommandHandler(consoleCommandController, bearerToken);
+        validateRegistrationHandler = new ValidateRegistrationHandler(validateRegistrationController, bearerToken);
     }
 
     private void initEndpoints() {

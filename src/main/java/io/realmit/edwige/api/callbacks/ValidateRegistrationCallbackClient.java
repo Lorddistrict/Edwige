@@ -2,12 +2,16 @@ package io.realmit.edwige.api.callbacks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
+import io.realmit.edwige.api.http.enums.HttpMethods;
 import org.bukkit.plugin.Plugin;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+
+import static io.realmit.edwige.api.http.utils.JsonUtils.HEADER_KEY_CONTENT_TYPE;
+import static io.realmit.edwige.api.http.utils.JsonUtils.HEADER_VALUE_JSON;
 
 public final class ValidateRegistrationCallbackClient {
 
@@ -28,9 +32,9 @@ public final class ValidateRegistrationCallbackClient {
                 URI uri = new URI(callbackUrl);
                 HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
 
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod(HttpMethods.HTTP_POST.method());
                 connection.setDoOutput(true);
-                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty(HEADER_KEY_CONTENT_TYPE, HEADER_VALUE_JSON);
 
                 String json = objectMapper.writeValueAsString(response);
 

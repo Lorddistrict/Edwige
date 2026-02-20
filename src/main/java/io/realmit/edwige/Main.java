@@ -29,11 +29,16 @@ public final class Main extends JavaPlugin {
     }
 
     private void initAll() {
+        initConfig();
         initServices();
         initApi();
         initListeners();
         registerEvents();
         registerCommands();
+    }
+
+    private void initConfig() {
+        saveDefaultConfig();
     }
 
     private void initServices() {
@@ -48,7 +53,8 @@ public final class Main extends JavaPlugin {
                 chatQuestionService,
                 messageService,
                 this,
-                8082
+                getConfig().getInt("api.port"),
+                getConfig().getString("security.bearerToken")
         );
 
         try {
@@ -94,13 +100,5 @@ public final class Main extends JavaPlugin {
         }
 
         return cmd;
-    }
-
-    public ChatQuestionService getConversationService() {
-        return chatQuestionService;
-    }
-
-    public MessageService getMessageService() {
-        return messageService;
     }
 }

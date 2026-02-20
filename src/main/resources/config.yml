@@ -1,0 +1,4 @@
+security:
+  bearerToken: "change-me"
+api:
+  port: 8082
