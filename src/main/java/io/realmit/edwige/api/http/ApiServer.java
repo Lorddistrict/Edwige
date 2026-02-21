@@ -5,12 +5,15 @@ import com.sun.net.httpserver.HttpServer;
 import io.realmit.edwige.api.callbacks.ValidateRegistrationCallbackClient;
 import io.realmit.edwige.api.controllers.ConsoleCommandController;
 import io.realmit.edwige.api.controllers.InfoController;
+import io.realmit.edwige.api.controllers.PlayerController;
 import io.realmit.edwige.api.controllers.ValidateRegistrationController;
 import io.realmit.edwige.api.http.handlers.ConsoleCommandHandler;
 import io.realmit.edwige.api.http.handlers.InfoHandler;
+import io.realmit.edwige.api.http.handlers.PlayerHandler;
 import io.realmit.edwige.api.http.handlers.ValidateRegistrationHandler;
 import io.realmit.edwige.api.services.ConsoleCommandService;
 import io.realmit.edwige.api.services.InfoService;
+import io.realmit.edwige.api.services.PlayerService;
 import io.realmit.edwige.api.services.ValidateRegistrationService;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
@@ -34,16 +37,19 @@ public final class ApiServer {
     private ConsoleCommandController consoleCommandController;
     private InfoController serverInfoController;
     private ValidateRegistrationController validateRegistrationController;
+    private PlayerController playerController;
 
     private ConsoleCommandHandler consoleCommandHandler;
     private InfoHandler serverInfoHandler;
     private ValidateRegistrationHandler validateRegistrationHandler;
+    private PlayerHandler playerHandler;
 
     private ConsoleCommandService consoleCommandService;
     private final ChatQuestionService chatQuestionService;
     private final MessageService messageService;
     private InfoService serverInfoService;
     private ValidateRegistrationService validateRegistrationService;
+    private PlayerService playerService;
 
     public ApiServer(
             ChatQuestionService chatQuestionService,
@@ -89,24 +95,28 @@ public final class ApiServer {
                 plugin,
                 validateRegistrationCallbackClient
         );
+        playerService = new PlayerService(plugin);
     }
 
     private void initControllers() {
         serverInfoController = new InfoController(serverInfoService);
         consoleCommandController = new ConsoleCommandController(consoleCommandService);
         validateRegistrationController = new ValidateRegistrationController(validateRegistrationService);
+        playerController = new PlayerController(playerService);
     }
 
     private void initHandlers() {
         serverInfoHandler = new InfoHandler(serverInfoController, bearerToken);
         consoleCommandHandler = new ConsoleCommandHandler(consoleCommandController, bearerToken);
         validateRegistrationHandler = new ValidateRegistrationHandler(validateRegistrationController, bearerToken);
+        playerHandler = new PlayerHandler(playerController, bearerToken);
     }
 
     private void initEndpoints() {
         server.createContext("/api/info", serverInfoHandler);
         server.createContext("/api/execute", consoleCommandHandler);
         server.createContext("/api/validate-registration", validateRegistrationHandler);
+        server.createContext("/api/players", playerHandler);
     }
 
     public void stop() {
