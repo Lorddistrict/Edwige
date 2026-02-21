@@ -53,8 +53,8 @@ public final class Main extends JavaPlugin {
                 chatQuestionService,
                 messageService,
                 this,
-                getConfig().getInt("api.port"),
-                getConfig().getString("security.bearerToken")
+                getConfig().getInt("modules.api.config.port"),
+                getConfig().getString("modules.api.security.bearerToken")
         );
 
         try {

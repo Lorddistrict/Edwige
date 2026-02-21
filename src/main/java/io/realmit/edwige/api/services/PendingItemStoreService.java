@@ -30,12 +30,10 @@ public final class PendingItemStoreService {
         List<ItemStack> items = pending.get(playerId);
 
         if (items == null || items.isEmpty()) {
-            plugin.getLogger().info("[getPendingItems] No pending items for " + playerId);
-
             return Collections.emptyList();
         }
 
-        plugin.getLogger().info("[getPendingItems] Pending items for " + playerId + ":");
+        plugin.getLogger().info("[PendingItemStoreService] Pending items for " + playerId);
 
         return new ArrayList<>(items);
     }
@@ -72,8 +70,8 @@ public final class PendingItemStoreService {
                 if (!items.isEmpty()) {
                     pending.put(uuid, new ArrayList<>(items));
                 }
-            } catch (IllegalArgumentException ex) {
-                plugin.getLogger().warning("[loadFromDisk] Invalid UUID in pending-items.yml: " + key);
+            } catch (IllegalArgumentException e) {
+                plugin.getLogger().warning("[PendingItemStoreService] Invalid UUID in pending-items.yml: " + key);
             }
         }
     }
@@ -88,7 +86,7 @@ public final class PendingItemStoreService {
         try {
             cfg.save(file);
         } catch (IOException e) {
-            plugin.getLogger().severe("[saveToDisk] Failed to save pending-items.yml: " + e.getMessage());
+            plugin.getLogger().severe("[PendingItemStoreService] Failed to save pending-items.yml: " + e.getMessage());
         }
     }
 }

@@ -34,22 +34,8 @@ public final class ApiServer {
 
     private ValidateRegistrationCallbackClient validateRegistrationCallbackClient;
 
-    private ConsoleCommandController consoleCommandController;
-    private InfoController serverInfoController;
-    private ValidateRegistrationController validateRegistrationController;
-    private PlayerController playerController;
-
-    private ConsoleCommandHandler consoleCommandHandler;
-    private InfoHandler serverInfoHandler;
-    private ValidateRegistrationHandler validateRegistrationHandler;
-    private PlayerHandler playerHandler;
-
-    private ConsoleCommandService consoleCommandService;
     private final ChatQuestionService chatQuestionService;
     private final MessageService messageService;
-    private InfoService serverInfoService;
-    private ValidateRegistrationService validateRegistrationService;
-    private PlayerService playerService;
 
     public ApiServer(
             ChatQuestionService chatQuestionService,
@@ -68,12 +54,15 @@ public final class ApiServer {
     public void start() throws IOException {
         InetSocketAddress address = new InetSocketAddress(port);
         server = HttpServer.create(address, 0);
+        String endpointsBase = plugin.getConfig().getString("modules.api.endpoints.base");
 
         initCallbacks();
-        initServices();
-        initControllers();
-        initHandlers();
-        initEndpoints();
+
+        // Enabled from config.yml
+        enableServerInfo(endpointsBase);
+        enableConsoleCommand(endpointsBase);
+        enableValidateRegistration(endpointsBase);
+        enablePlayer(endpointsBase);
 
         executor = Executors.newCachedThreadPool();
         server.setExecutor(executor);
@@ -86,37 +75,61 @@ public final class ApiServer {
         validateRegistrationCallbackClient = new ValidateRegistrationCallbackClient(plugin, new ObjectMapper());
     }
 
-    private void initServices() {
-        serverInfoService = new InfoService();
-        consoleCommandService = new ConsoleCommandService(plugin);
-        validateRegistrationService = new ValidateRegistrationService(
+    private void enableServerInfo(String endpointsBase) {
+        if (!plugin.getConfig().getBoolean("modules.api.endpoints.serverInfo.enabled")) {
+            return;
+        }
+
+        InfoService service = new InfoService();
+        InfoController controller = new InfoController(service);
+        InfoHandler handler = new InfoHandler(controller, bearerToken);
+
+        String path = plugin.getConfig().getString("modules.api.endpoints.serverInfo.path");
+        server.createContext(endpointsBase + path, handler);
+    }
+
+    private void enableConsoleCommand(String endpointsBase) {
+        if (!plugin.getConfig().getBoolean("modules.api.endpoints.consoleCommand.enabled")) {
+            return;
+        }
+
+        ConsoleCommandService service = new ConsoleCommandService(plugin);
+        ConsoleCommandController controller = new ConsoleCommandController(service);
+        ConsoleCommandHandler handler = new ConsoleCommandHandler(controller, bearerToken);
+
+        String path = plugin.getConfig().getString("modules.api.endpoints.consoleCommand.path");
+        server.createContext(endpointsBase + path, handler);
+    }
+
+    private void enableValidateRegistration(String endpointsBase) {
+        if (!plugin.getConfig().getBoolean("modules.api.endpoints.validateRegistration.enabled")) {
+            return;
+        }
+
+        ValidateRegistrationService service = new ValidateRegistrationService(
                 chatQuestionService,
                 messageService,
                 plugin,
                 validateRegistrationCallbackClient
         );
-        playerService = new PlayerService(plugin);
+        ValidateRegistrationController controller = new ValidateRegistrationController(service);
+        ValidateRegistrationHandler handler = new ValidateRegistrationHandler(controller, bearerToken);
+
+        String path = plugin.getConfig().getString("modules.api.endpoints.validateRegistration.path");
+        server.createContext(endpointsBase + path, handler);
     }
 
-    private void initControllers() {
-        serverInfoController = new InfoController(serverInfoService);
-        consoleCommandController = new ConsoleCommandController(consoleCommandService);
-        validateRegistrationController = new ValidateRegistrationController(validateRegistrationService);
-        playerController = new PlayerController(playerService);
-    }
+    private void enablePlayer(String endpointsBase) {
+        if (!plugin.getConfig().getBoolean("modules.api.endpoints.player.enabled")) {
+            return;
+        }
 
-    private void initHandlers() {
-        serverInfoHandler = new InfoHandler(serverInfoController, bearerToken);
-        consoleCommandHandler = new ConsoleCommandHandler(consoleCommandController, bearerToken);
-        validateRegistrationHandler = new ValidateRegistrationHandler(validateRegistrationController, bearerToken);
-        playerHandler = new PlayerHandler(playerController, bearerToken);
-    }
+        PlayerService service = new PlayerService(plugin);
+        PlayerController controller = new PlayerController(service);
+        PlayerHandler handler = new PlayerHandler(controller, bearerToken);
 
-    private void initEndpoints() {
-        server.createContext("/api/info", serverInfoHandler);
-        server.createContext("/api/execute", consoleCommandHandler);
-        server.createContext("/api/validate-registration", validateRegistrationHandler);
-        server.createContext("/api/players", playerHandler);
+        String path = plugin.getConfig().getString("modules.api.endpoints.player.path");
+        server.createContext(endpointsBase + path, handler);
     }
 
     public void stop() {

@@ -1,4 +1,20 @@
-security:
-  bearerToken: "change-me"
-api:
-  port: 8082
+modules:
+  api:
+    config:
+      port: 8082
+    security:
+      bearerToken: "change-me" # if empty string, no authentication will be performed
+    endpoints:
+      base: "/api"
+      serverInfo:
+        enabled: true,
+        path: "/info"
+      consoleCommand:
+        enabled: true
+        path: "/execute"
+      validateRegistration:
+        enabled: true
+        path: "/validate-registration"
+      player:
+        enabled: true
+        path: "/players"
