@@ -11,13 +11,19 @@ repositories {
     mavenCentral()
     maven {
         name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
+        url "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        url "https://jitpack.io"
     }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1") {
+        exclude group: "org.bukkit", module: "bukkit"
+    }
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
 }
 
 tasks {

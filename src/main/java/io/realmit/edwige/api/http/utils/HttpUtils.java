@@ -2,6 +2,7 @@ package io.realmit.edwige.api.http.utils;
 
 import com.sun.net.httpserver.HttpExchange;
 import io.realmit.edwige.api.http.enums.HttpStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -43,4 +44,25 @@ public final class HttpUtils {
         return true;
     }
 
+    public static @Nullable String extractUrlParameterFromURL(HttpExchange exchange) {
+        String contextPath = exchange.getHttpContext().getPath();
+        String fullPath = exchange.getRequestURI().getPath();
+        String rest = fullPath.substring(contextPath.length());
+        String parameter = null;
+
+        if (!rest.isEmpty()) {
+            if (rest.startsWith("/")) {
+                rest = rest.substring(1);
+            }
+
+            String[] segments = rest.split("/");
+            parameter = segments[0];
+        }
+
+        if (parameter == null || parameter.isBlank()) {
+            return null;
+        }
+
+        return parameter;
+    }
 }
