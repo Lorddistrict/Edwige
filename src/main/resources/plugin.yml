@@ -10,8 +10,15 @@ commands:
     description: Redeem items
     usage: /redeem
     permission: edwige.command.redeem
+  mailbox:
+    description: Open/Close player's mailbox
+    usage: /mailbox
+    permission: edwige.command.mailbox
 
 permissions:
   edwige.command.redeem:
     description: Allows using /edwige:redeem
+    default: true
+  edwige.command.mailbox:
+    description: Allows using /edwige:mailbox
     default: true
