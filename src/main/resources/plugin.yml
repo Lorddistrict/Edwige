@@ -1,6 +1,6 @@
 name: Edwige
 version: '1.0-SNAPSHOT'
-main: io.realmit.edwige.Main
+main: io.realmit.edwige.EdwigePlugin
 api-version: '1.21'
 load: POSTWORLD
 softdepend: [Vault]
