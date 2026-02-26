@@ -1,9 +1,10 @@
+# This file configures the plugins
 modules:
   api:
     config:
       port: 8082
     security:
-      bearerToken: "change-me" # if empty string, no authentication will be performed
+      bearerToken: "change-me"
     endpoints:
       base: "/api"
       serverInfo:
@@ -18,3 +19,7 @@ modules:
       player:
         enabled: true
         path: "/players"
+  mailbox:
+    config:
+      inventory:
+        base: "Mailbox of "
