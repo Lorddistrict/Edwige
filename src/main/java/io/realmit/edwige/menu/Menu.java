@@ -1,14 +1,15 @@
 package io.realmit.edwige.menu;
 
+import io.realmit.edwige.menu.interfaces.MenuInterface;
 import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.jspecify.annotations.NonNull;
 
-public abstract class Menu implements InventoryHolder {
+public abstract class Menu implements InventoryHolder, MenuInterface {
 
     protected Inventory inventory;
     protected PlayerMenuUtils playerMenuUtils;
@@ -17,18 +18,18 @@ public abstract class Menu implements InventoryHolder {
         this.playerMenuUtils = playerMenuUtils;
     }
 
-    public abstract void handleMenu(InventoryClickEvent e);
+    public abstract void handleMenu();
 
     public abstract int getInventorySize();
 
     public abstract Component getInventoryTitle();
 
-    public abstract void setMenuItems();
+    public abstract void setMenuItems(Player player);
 
-    public void open() {
+    public void open(Player player) {
         inventory = Bukkit.createInventory(this, getInventorySize(), getInventoryTitle());
-        setMenuItems();
-        playerMenuUtils.getOwner().openInventory(inventory);
+        setMenuItems(player);
+        player.openInventory(inventory);
     }
 
     @NonNull @Override

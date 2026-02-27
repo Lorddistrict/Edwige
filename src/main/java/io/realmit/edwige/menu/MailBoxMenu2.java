@@ -1,6 +1,6 @@
 package io.realmit.edwige.menu;
 
-import io.realmit.edwige.config.MailBoxMenuConfig;
+import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -8,29 +8,16 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 public final class MailBoxMenu2 extends PaginatedMenu {
 
-    private final MailBoxMenuConfig mailboxesConfig;
-    private final Plugin plugin;
-
-    public MailBoxMenu2(
-            PlayerMenuUtils playerMenuUtils,
-            MailBoxMenuConfig mailboxesConfig,
-            Plugin plugin
-    ) {
+    public MailBoxMenu2(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
-        this.mailboxesConfig = mailboxesConfig;
-        this.plugin = plugin;
     }
 
     @Override
-    public void handleMenu(InventoryClickEvent e) {
-
-    }
+    public void handleMenu() {}
 
     @Override
     public int getInventorySize() {
@@ -43,9 +30,8 @@ public final class MailBoxMenu2 extends PaginatedMenu {
     }
 
     @Override
-    public void setMenuItems() {
-        Player player = playerMenuUtils.getOwner();
-        FileConfiguration cfg = mailboxesConfig.getConfig();
+    public void setMenuItems(Player player) {
+        FileConfiguration cfg = EdwigePlugin.getPlugin().getContext().getMailboxesConfig().getConfig();
         String itemsPath = "mailboxes." + player.getUniqueId() + ".pages." + page + ".items";
         ConfigurationSection itemsSection = cfg.getConfigurationSection(itemsPath);
 
