@@ -67,11 +67,11 @@ public final class EdwigePlugin extends JavaPlugin {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(context.getChatQuestionListener(), this);
-        getServer().getPluginManager().registerEvents(context.getMailboxListener(), this);
+//        getServer().getPluginManager().registerEvents(context.getMailboxListener(), this);
     }
 
     private void registerCommands() {
-        registerCommand("mailbox", context.getMailBoxCommandExecutor());
+//        registerCommand("mailbox", context.getMailBoxCommandExecutor());
     }
 
     private void registerCommand(String name, CommandExecutor executor) {

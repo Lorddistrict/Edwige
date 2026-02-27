@@ -11,17 +11,12 @@ public abstract class PaginatedMenu extends Menu {
 
     protected int page = 0;
 
-    protected int maxItemsPerPage = 52;
+    protected int maxItemsPerPage = 45;
 
     protected int index = 0;
 
     public PaginatedMenu(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
-    }
-
-    public void addOptions() {
-        addPreviousButton();
-        addNextButton();
     }
 
     public void addPreviousButton() {
@@ -30,7 +25,7 @@ public abstract class PaginatedMenu extends Menu {
         meta.displayName(Component.text("Previous", NamedTextColor.RED));
         previous.setItemMeta(meta);
 
-        inventory.setItem(52, previous);
+        inventory.setItem(45, previous);
     }
 
     public void addNextButton() {
@@ -40,5 +35,12 @@ public abstract class PaginatedMenu extends Menu {
         next.setItemMeta(meta);
 
         inventory.setItem(53, next);
+    }
+
+    public void addEmptySlots() {
+        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+        for (int i = 46; i < 53; i++) {
+            inventory.setItem(i, grayPane);
+        }
     }
 }

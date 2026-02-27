@@ -3,9 +3,10 @@ package io.realmit.edwige;
 import io.realmit.edwige.api.listeners.ChatQuestionListener;
 import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.MailBoxMenuConfig;
-import io.realmit.edwige.listeners.MailBoxListener;
-import io.realmit.edwige.menu.MailBoxMenu;
+//import io.realmit.edwige.listeners.MailBoxListener;
+//import io.realmit.edwige.menu.MailBoxMenu;
 import io.realmit.edwige.menu.MailBoxMenu2;
+import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.command.CommandExecutor;
@@ -17,19 +18,19 @@ public final class PluginContext {
     private final MailBoxMenuConfig mailboxesConfig;
     private final MessageService messageService;
     private final ChatQuestionService chatQuestionService;
-    private final MailBoxMenu mailBoxMenu;
-    private final MailBoxMenu2 mailBoxMenu2;
+//    private final PlayerMenuUtils playerMenuUtils;
+//    private final MailBoxMenu2 mailBoxMenu2;
     private final ChatQuestionListener chatQuestionListener;
-    private final MailBoxListener mailboxListener;
+//    private final MailBoxListener mailboxListener;
 
     public PluginContext(JavaPlugin plugin) {
         this.mailboxesConfig = new MailBoxMenuConfig(plugin);
         this.messageService = new MessageService(plugin);
         this.chatQuestionService = new ChatQuestionService(messageService, plugin);
-        this.mailBoxMenu = new MailBoxMenu(plugin, mailboxesConfig);
-        this.mailBoxMenu2 = new MailBoxMenu2(plugin, mailboxesConfig);
+//        this.playerMenuUtils = new PlayerMenuUtils(player);
+//        this.mailBoxMenu2 = new MailBoxMenu2(playerMenuUtils, mailboxesConfig, plugin);
         this.chatQuestionListener = new ChatQuestionListener(chatQuestionService);
-        this.mailboxListener = new MailBoxListener(mailBoxMenu);
+//        this.mailboxListener = new MailBoxListener(mailBoxMenu);
     }
 
     public MailBoxMenuConfig getMailboxesConfig() {
@@ -44,23 +45,23 @@ public final class PluginContext {
         return chatQuestionService;
     }
 
-    public MailBoxMenu getMailBoxMenu() {
-        return mailBoxMenu;
-    }
+//    public MailBoxMenu getMailBoxMenu() {
+//        return mailBoxMenu;
+//    }
 
-    public MailBoxMenu2 getMailBoxMenu2() {
-        return mailBoxMenu2;
-    }
+//    public MailBoxMenu2 getMailBoxMenu2() {
+//        return mailBoxMenu2;
+//    }
 
     public Listener getChatQuestionListener() {
         return chatQuestionListener;
     }
 
-    public Listener getMailboxListener() {
-        return mailboxListener;
-    }
+//    public Listener getMailboxListener() {
+//        return mailboxListener;
+//    }
 
-    public CommandExecutor getMailBoxCommandExecutor() {
-        return new MailBoxCommand(mailBoxMenu);
-    }
+//    public CommandExecutor getMailBoxCommandExecutor() {
+//        return new MailBoxCommand(mailBoxMenu);
+//    }
 }
