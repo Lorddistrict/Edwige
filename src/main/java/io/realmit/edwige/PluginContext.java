@@ -4,6 +4,7 @@ import io.realmit.edwige.api.listeners.ChatQuestionListener;
 import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.MailBoxMenuConfig;
 import io.realmit.edwige.listeners.MailBoxListener;
+import io.realmit.edwige.listeners.MenuListener;
 import io.realmit.edwige.menu.MailBoxMenu2;
 import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import io.realmit.edwige.services.ChatQuestionService;
@@ -21,6 +22,7 @@ public final class PluginContext {
     private final MailBoxMenu2 mailBoxMenu2;
     private final ChatQuestionListener chatQuestionListener;
     private final MailBoxListener mailboxListener;
+    private final MenuListener menuListener;
 
     public PluginContext(JavaPlugin plugin) {
         this.mailboxesConfig = new MailBoxMenuConfig(plugin);
@@ -29,7 +31,8 @@ public final class PluginContext {
         this.playerMenuUtils = new PlayerMenuUtils();
         this.mailBoxMenu2 = new MailBoxMenu2(playerMenuUtils);
         this.chatQuestionListener = new ChatQuestionListener(chatQuestionService);
-        this.mailboxListener = new MailBoxListener();
+        this.mailboxListener = new MailBoxListener(mailBoxMenu2);
+        this.menuListener = new MenuListener();
     }
 
     public MailBoxMenuConfig getMailboxesConfig() {
@@ -48,10 +51,6 @@ public final class PluginContext {
         return playerMenuUtils;
     }
 
-//    public MailBoxMenu getMailBoxMenu() {
-//        return mailBoxMenu;
-//    }
-
     public MailBoxMenu2 getMailBoxMenu2() {
         return mailBoxMenu2;
     }
@@ -66,5 +65,9 @@ public final class PluginContext {
 
     public CommandExecutor getMailBoxCommandExecutor() {
         return new MailBoxCommand(mailBoxMenu2);
+    }
+
+    public Listener getMenuListener() {
+        return menuListener;
     }
 }

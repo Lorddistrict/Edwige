@@ -9,9 +9,16 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
 public final class MailBoxMenu2 extends PaginatedMenu {
+
+    private final Set<UUID> openedMailboxes = new HashSet<>();
 
     public MailBoxMenu2(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
@@ -99,5 +106,35 @@ public final class MailBoxMenu2 extends PaginatedMenu {
         addPreviousButton();
         addEmptySlots();
         addNextButton();
+
+        openedMailboxes.add(player.getUniqueId());
+    }
+
+    public void save(Player player, Inventory inventory) {
+        FileConfiguration cfg = EdwigePlugin.getPlugin().getContext().getMailboxesConfig().getConfig();
+        String basePath = "mailboxes." + player.getUniqueId();
+
+        cfg.set(basePath + ".playerName", player.getName());
+
+        String itemsPath = basePath + ".pages." + page + ".items";
+        cfg.set(itemsPath, null);
+
+        for (int slot = 0; slot < maxItemsPerPage; slot++) {
+            ItemStack item = inventory.getItem(slot);
+            if (item == null || item.getType() == Material.AIR) {
+                continue;
+            }
+            cfg.set(itemsPath + "." + slot, item);
+        }
+
+        EdwigePlugin.getPlugin().getContext().getMailboxesConfig().save();
+    }
+
+    public boolean hasMailboxOpen(UUID playerId) {
+        return openedMailboxes.contains(playerId);
+    }
+
+    public void markMailboxClosed(UUID playerId) {
+        openedMailboxes.remove(playerId);
     }
 }
