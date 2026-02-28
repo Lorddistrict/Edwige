@@ -29,7 +29,7 @@ public final class PluginContext {
         this.playerMenuUtils = new PlayerMenuUtils();
         this.mailBoxMenu2 = new MailBoxMenu2(playerMenuUtils);
         this.chatQuestionListener = new ChatQuestionListener(chatQuestionService);
-        this.mailboxListener = new MailBoxListener(mailBoxMenu2);
+        this.mailboxListener = new MailBoxListener();
     }
 
     public MailBoxMenuConfig getMailboxesConfig() {

@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public final class MailBoxMenu2 extends PaginatedMenu {
@@ -17,7 +18,48 @@ public final class MailBoxMenu2 extends PaginatedMenu {
     }
 
     @Override
-    public void handleMenu() {}
+    public void handleMenu(InventoryClickEvent event) {
+        ItemStack clickedItem = event.getCurrentItem();
+
+        if (clickedItem == null) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (clickedItem.equals(getNext())) {
+            event.setCancelled(true);
+            int maxPages = EdwigePlugin
+                    .getPlugin()
+                    .getConfig()
+                    .getInt("modules.mailbox.config.menus.mailboxMenu2.maxPages");
+
+            if (page >= maxPages) {
+                event.getWhoClicked().sendMessage("You are already on the last page.");
+                return;
+            }
+
+            page = page + 1;
+            super.open((Player) event.getWhoClicked());
+            event.getWhoClicked().sendMessage("page = " + page);
+        }
+
+        if (clickedItem.equals(getPrevious())) {
+            event.setCancelled(true);
+
+            if (page == 0) {
+                event.getWhoClicked().sendMessage("You are already on the first page.");
+                return;
+            }
+
+            page = page - 1;
+            super.open((Player) event.getWhoClicked());
+            event.getWhoClicked().sendMessage("page = " + page);
+        }
+
+        if (clickedItem.equals(getGrayPane())) {
+            event.setCancelled(true);
+        }
+    }
 
     @Override
     public int getInventorySize() {

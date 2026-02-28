@@ -15,12 +15,18 @@ public abstract class PaginatedMenu extends Menu {
 
     protected int index = 0;
 
+    protected ItemStack previous;
+
+    protected ItemStack next;
+
+    protected ItemStack grayPane;
+
     public PaginatedMenu(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
     }
 
     public void addPreviousButton() {
-        ItemStack previous = new ItemStack(Material.RED_DYE, 1);
+        previous = new ItemStack(Material.RED_DYE, 1);
         ItemMeta meta = previous.getItemMeta();
         meta.displayName(Component.text("Previous", NamedTextColor.RED));
         previous.setItemMeta(meta);
@@ -28,8 +34,12 @@ public abstract class PaginatedMenu extends Menu {
         inventory.setItem(45, previous);
     }
 
+    public ItemStack getPrevious() {
+        return previous;
+    }
+
     public void addNextButton() {
-        ItemStack next = new ItemStack(Material.LIME_DYE, 1);
+        next = new ItemStack(Material.LIME_DYE, 1);
         ItemMeta meta = next.getItemMeta();
         meta.displayName(Component.text("Next", NamedTextColor.GREEN));
         next.setItemMeta(meta);
@@ -37,10 +47,18 @@ public abstract class PaginatedMenu extends Menu {
         inventory.setItem(53, next);
     }
 
+    public ItemStack getNext() {
+        return next;
+    }
+
     public void addEmptySlots() {
-        ItemStack grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+        grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
         for (int i = 46; i < 53; i++) {
             inventory.setItem(i, grayPane);
         }
+    }
+
+    public ItemStack getGrayPane() {
+        return grayPane;
     }
 }
