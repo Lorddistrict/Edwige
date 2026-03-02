@@ -1,7 +1,7 @@
 package io.realmit.edwige.commands;
 
 import io.realmit.edwige.PluginContext;
-import io.realmit.edwige.menu.MailBoxMenu2;
+import io.realmit.edwige.menu.MailBoxMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public class MailBoxCommand implements CommandExecutor {
             return true;
         }
 
-        new MailBoxMenu2(PluginContext.getPlayerMenuUtils(player)).open();
+        new MailBoxMenu(PluginContext.getPlayerMenuUtils(player)).open();
 
         return true;
     }

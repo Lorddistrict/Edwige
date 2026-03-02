@@ -10,16 +10,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 public abstract class PaginatedMenu extends Menu {
 
     protected int page = 0;
-
-    protected int maxItemsPerPage = 45;
-
-    protected int index = 0;
-
+    protected final int maxItemsPerPage = 45;
     protected ItemStack previous;
-
     protected ItemStack next;
-
     protected ItemStack grayPane;
+    protected static final int previousButtonSlot = 45;
+    protected static final int nextButtonSlot = 53;
 
     public PaginatedMenu(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
@@ -30,8 +26,7 @@ public abstract class PaginatedMenu extends Menu {
         ItemMeta meta = previous.getItemMeta();
         meta.displayName(Component.text("Previous", NamedTextColor.RED));
         previous.setItemMeta(meta);
-
-        inventory.setItem(45, previous);
+        inventory.setItem(previousButtonSlot, previous);
     }
 
     public ItemStack getPrevious() {
@@ -43,8 +38,7 @@ public abstract class PaginatedMenu extends Menu {
         ItemMeta meta = next.getItemMeta();
         meta.displayName(Component.text("Next", NamedTextColor.GREEN));
         next.setItemMeta(meta);
-
-        inventory.setItem(53, next);
+        inventory.setItem(nextButtonSlot, next);
     }
 
     public ItemStack getNext() {
@@ -53,7 +47,7 @@ public abstract class PaginatedMenu extends Menu {
 
     public void addEmptySlots() {
         grayPane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
-        for (int i = 46; i < 53; i++) {
+        for (int i = previousButtonSlot+1; i < nextButtonSlot; i++) {
             inventory.setItem(i, grayPane);
         }
     }
