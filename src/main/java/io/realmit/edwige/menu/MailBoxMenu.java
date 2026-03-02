@@ -1,49 +1,88 @@
 package io.realmit.edwige.menu;
 
-import io.realmit.edwige.config.MailBoxMenuConfig;
-import io.realmit.edwige.menu.interfaces.MenuInterface;
+import io.realmit.edwige.EdwigePlugin;
+import io.realmit.edwige.PluginContext;
+import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+public final class MailBoxMenu extends PaginatedMenu {
 
-public final class MailBoxMenu implements MenuInterface {
-
-    private static final int MAILBOX_SIZE = 54;
-
-    private final Plugin plugin;
-    private final MailBoxMenuConfig mailboxesConfig;
-    private final Set<UUID> openedMailboxes = new HashSet<>();
-
-    public MailBoxMenu(
-            Plugin plugin,
-            MailBoxMenuConfig mailboxesConfig
-    ) {
-        this.plugin = plugin;
-        this.mailboxesConfig = mailboxesConfig;
+    public MailBoxMenu(PlayerMenuUtils playerMenuUtils) {
+        super(playerMenuUtils);
     }
 
     @Override
-    public void open(Player player) {
-        FileConfiguration cfg = mailboxesConfig.getConfig();
-        String itemsPath = "mailboxes." + player.getUniqueId() + ".items";
-        String mailboxInventoryBase = plugin.getConfig().getString("modules.mailbox.config.inventory.base");
+    public void handleMenu(InventoryClickEvent event) {
+        InventoryHolder holder = event.getInventory().getHolder();
 
-        Inventory inventory = Bukkit.createInventory(
-                null,
-                MAILBOX_SIZE,
-                Component.text( mailboxInventoryBase + player.getName())
-        );
+        if (!(holder instanceof MailBoxMenu)) return;
+        if (!context.hasMenuOpen(event.getWhoClicked().getUniqueId(), "mailbox")) return;
 
+        FileConfiguration config = EdwigePlugin.getPlugin().getConfig();
+        ItemStack clickedItem = event.getCurrentItem();
+
+        if (clickedItem == null) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (clickedItem.equals(getNext())) {
+            event.setCancelled(true);
+            int maxPages = config.getInt("modules.mailbox.config.menus.mailboxMenu.maxPages");
+
+            if (page >= maxPages) {
+                return;
+            }
+
+            page = page + 1;
+            super.open();
+        }
+
+        if (clickedItem.equals(getPrevious())) {
+            event.setCancelled(true);
+
+            if (page == 0) {
+                return;
+            }
+
+            page = page - 1;
+            super.open();
+        }
+
+        if (clickedItem.equals(getGrayPane())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @Override
+    public int getInventorySize() {
+        return 54;
+    }
+
+    @Override
+    public Component getInventoryTitle() {
+        FileConfiguration config = EdwigePlugin.getPlugin().getConfig();
+        int maxPages = config.getInt("modules.mailbox.config.menus.mailboxMenu.maxPages");
+        int currentPage = page+1;
+        String text = "Mailbox of " + playerMenuUtils.getOwner().getName() + " - " + currentPage + "/" + maxPages;
+
+        return Component.text(text, NamedTextColor.DARK_RED);
+    }
+
+    @Override
+    public void setMenuItems() {
+        String itemsPath = "mailboxes." + playerMenuUtils.getOwner().getUniqueId() + ".pages." + page + ".items";
+        PluginContext context = EdwigePlugin.getPlugin().getContext();
+        FileConfiguration cfg = context.getMailboxesConfig().getConfig();
         ConfigurationSection itemsSection = cfg.getConfigurationSection(itemsPath);
 
         if (itemsSection != null) {
@@ -56,33 +95,30 @@ public final class MailBoxMenu implements MenuInterface {
                     continue;
                 }
 
-                if (slot < 0 || slot >= MAILBOX_SIZE) {
-                    continue;
-                }
+                if (slot < 0 || slot >= maxItemsPerPage) continue;
 
                 ItemStack item = itemsSection.getItemStack(key);
-
                 if (item != null && item.getType() != Material.AIR) {
                     inventory.setItem(slot, item);
                 }
             }
         }
 
-        openedMailboxes.add(player.getUniqueId());
-
-        player.openInventory(inventory);
+        addPreviousButton();
+        addEmptySlots();
+        addNextButton();
     }
 
     public void save(Player player, Inventory inventory) {
-        FileConfiguration cfg = mailboxesConfig.getConfig();
+        PluginContext context = EdwigePlugin.getPlugin().getContext();
+        FileConfiguration cfg = context.getMailboxesConfig().getConfig();
         String basePath = "mailboxes." + player.getUniqueId();
 
         cfg.set(basePath + ".playerName", player.getName());
-
-        String itemsPath = basePath + ".items";
+        String itemsPath = basePath + ".pages." + page + ".items";
         cfg.set(itemsPath, null);
 
-        for (int slot = 0; slot < inventory.getSize(); slot++) {
+        for (int slot = 0; slot < maxItemsPerPage; slot++) {
             ItemStack item = inventory.getItem(slot);
             if (item == null || item.getType() == Material.AIR) {
                 continue;
@@ -90,14 +126,6 @@ public final class MailBoxMenu implements MenuInterface {
             cfg.set(itemsPath + "." + slot, item);
         }
 
-        mailboxesConfig.save();
-    }
-
-    public boolean hasMailboxOpen(UUID playerId) {
-        return openedMailboxes.contains(playerId);
-    }
-
-    public void markMailboxClosed(UUID playerId) {
-        openedMailboxes.remove(playerId);
+        context.getMailboxesConfig().save();
     }
 }

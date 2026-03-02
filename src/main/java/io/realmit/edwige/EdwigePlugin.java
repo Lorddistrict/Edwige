@@ -7,12 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EdwigePlugin extends JavaPlugin {
 
+    private static EdwigePlugin plugin;
     private PluginContext context;
     private ApiServer apiServer;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        plugin = this;
         context = new PluginContext(this);
 
         initApi();
@@ -67,6 +69,7 @@ public final class EdwigePlugin extends JavaPlugin {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(context.getChatQuestionListener(), this);
+        getServer().getPluginManager().registerEvents(context.getMenuListener(), this);
         getServer().getPluginManager().registerEvents(context.getMailboxListener(), this);
     }
 
@@ -83,5 +86,13 @@ public final class EdwigePlugin extends JavaPlugin {
             throw new IllegalStateException(message);
         }
         cmd.setExecutor(executor);
+    }
+
+    public PluginContext getContext() {
+        return context;
+    }
+
+    public static EdwigePlugin getPlugin() {
+        return plugin;
     }
 }

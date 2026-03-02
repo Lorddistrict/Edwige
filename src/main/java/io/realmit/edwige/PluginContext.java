@@ -4,29 +4,48 @@ import io.realmit.edwige.api.listeners.ChatQuestionListener;
 import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.MailBoxMenuConfig;
 import io.realmit.edwige.listeners.MailBoxListener;
-import io.realmit.edwige.menu.MailBoxMenu;
+import io.realmit.edwige.listeners.MenuListener;
+import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.*;
+
 public final class PluginContext {
+
+    private final Map<UUID, String> openMenus = new HashMap<>();
+    private static final HashMap<Player, PlayerMenuUtils> playerMenuUtilsMap = new HashMap<>();
 
     private final MailBoxMenuConfig mailboxesConfig;
     private final MessageService messageService;
     private final ChatQuestionService chatQuestionService;
-    private final MailBoxMenu mailBoxMenu;
     private final ChatQuestionListener chatQuestionListener;
     private final MailBoxListener mailboxListener;
+    private final MenuListener menuListener;
 
     public PluginContext(JavaPlugin plugin) {
         this.mailboxesConfig = new MailBoxMenuConfig(plugin);
         this.messageService = new MessageService(plugin);
         this.chatQuestionService = new ChatQuestionService(messageService, plugin);
-        this.mailBoxMenu = new MailBoxMenu(plugin, mailboxesConfig);
         this.chatQuestionListener = new ChatQuestionListener(chatQuestionService);
-        this.mailboxListener = new MailBoxListener(mailBoxMenu);
+        this.mailboxListener = new MailBoxListener();
+        this.menuListener = new MenuListener();
+    }
+
+    public void registerOpenMenu(UUID playerId, String menuType) {
+        openMenus.put(playerId, menuType);
+    }
+
+    public void unregisterOpenMenu(UUID playerId) {
+        openMenus.remove(playerId);
+    }
+
+    public boolean hasMenuOpen(UUID playerId, String menuType) {
+        return menuType.equals(openMenus.get(playerId));
     }
 
     public MailBoxMenuConfig getMailboxesConfig() {
@@ -41,10 +60,6 @@ public final class PluginContext {
         return chatQuestionService;
     }
 
-    public MailBoxMenu getMailBoxMenu() {
-        return mailBoxMenu;
-    }
-
     public Listener getChatQuestionListener() {
         return chatQuestionListener;
     }
@@ -54,6 +69,23 @@ public final class PluginContext {
     }
 
     public CommandExecutor getMailBoxCommandExecutor() {
-        return new MailBoxCommand(mailBoxMenu);
+        return new MailBoxCommand();
+    }
+
+    public Listener getMenuListener() {
+        return menuListener;
+    }
+
+    public static PlayerMenuUtils getPlayerMenuUtils(Player player) {
+        PlayerMenuUtils playerMenuUtils;
+
+        if (!playerMenuUtilsMap.containsKey(player)) {
+            playerMenuUtils = new PlayerMenuUtils(player);
+            playerMenuUtilsMap.put(player, playerMenuUtils);
+
+            return playerMenuUtils;
+        }
+
+        return playerMenuUtilsMap.get(player);
     }
 }

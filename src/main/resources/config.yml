@@ -23,3 +23,6 @@ modules:
     config:
       inventory:
         base: "Mailbox of "
+      menus:
+        mailboxMenu:
+          maxPages: 10
