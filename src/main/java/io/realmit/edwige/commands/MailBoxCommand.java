@@ -1,6 +1,7 @@
 package io.realmit.edwige.commands;
 
-import io.realmit.edwige.menu.interfaces.MenuInterface;
+import io.realmit.edwige.PluginContext;
+import io.realmit.edwige.menu.MailBoxMenu2;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,12 +9,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class MailBoxCommand implements CommandExecutor {
-
-    private final MenuInterface menu;
-
-    public MailBoxCommand(MenuInterface menu) {
-        this.menu = menu;
-    }
 
     @Override
     public boolean onCommand(
@@ -32,7 +27,8 @@ public class MailBoxCommand implements CommandExecutor {
             return true;
         }
 
-        menu.open(player);
+        new MailBoxMenu2(PluginContext.getPlayerMenuUtils(player)).open();
+
         return true;
     }
 }

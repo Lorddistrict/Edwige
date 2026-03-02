@@ -4,7 +4,6 @@ import io.realmit.edwige.menu.interfaces.MenuInterface;
 import io.realmit.edwige.menu.utils.PlayerMenuUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -25,12 +24,12 @@ public abstract class Menu implements InventoryHolder, MenuInterface {
 
     public abstract Component getInventoryTitle();
 
-    public abstract void setMenuItems(Player player);
+    public abstract void setMenuItems();
 
-    public void open(Player player) {
+    public void open() {
         inventory = Bukkit.createInventory(this, getInventorySize(), getInventoryTitle());
-        setMenuItems(player);
-        player.openInventory(inventory);
+        setMenuItems();
+        playerMenuUtils.getOwner().openInventory(inventory);
     }
 
     @NonNull @Override

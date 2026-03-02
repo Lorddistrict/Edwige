@@ -12,16 +12,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 public final class MailBoxMenu2 extends PaginatedMenu {
 
-    private final Set<UUID> openedMailboxes = new HashSet<>();
+    private final FileConfiguration config;
 
     public MailBoxMenu2(PlayerMenuUtils playerMenuUtils) {
         super(playerMenuUtils);
+        this.config = EdwigePlugin.getPlugin().getConfig();
     }
 
     @Override
@@ -35,10 +32,7 @@ public final class MailBoxMenu2 extends PaginatedMenu {
 
         if (clickedItem.equals(getNext())) {
             event.setCancelled(true);
-            int maxPages = EdwigePlugin
-                    .getPlugin()
-                    .getConfig()
-                    .getInt("modules.mailbox.config.menus.mailboxMenu2.maxPages");
+            int maxPages = config.getInt("modules.mailbox.config.menus.mailboxMenu2.maxPages");
 
             if (page >= maxPages) {
                 event.getWhoClicked().sendMessage("You are already on the last page.");
@@ -46,7 +40,7 @@ public final class MailBoxMenu2 extends PaginatedMenu {
             }
 
             page = page + 1;
-            super.open((Player) event.getWhoClicked());
+            super.open();
             event.getWhoClicked().sendMessage("page = " + page);
         }
 
@@ -59,7 +53,7 @@ public final class MailBoxMenu2 extends PaginatedMenu {
             }
 
             page = page - 1;
-            super.open((Player) event.getWhoClicked());
+            super.open();
             event.getWhoClicked().sendMessage("page = " + page);
         }
 
@@ -75,13 +69,17 @@ public final class MailBoxMenu2 extends PaginatedMenu {
 
     @Override
     public Component getInventoryTitle() {
-        return Component.text("Mailbox of ...", NamedTextColor.GOLD);
+        int maxPages = config.getInt("modules.mailbox.config.menus.mailboxMenu2.maxPages");
+        int currentPage = page+1;
+        String text = "Mailbox of " + playerMenuUtils.getOwner().getName() + " - " + currentPage + "/" + maxPages;
+        return Component.text(text, NamedTextColor.DARK_RED);
     }
 
     @Override
-    public void setMenuItems(Player player) {
+    public void setMenuItems() {
         FileConfiguration cfg = EdwigePlugin.getPlugin().getContext().getMailboxesConfig().getConfig();
-        String itemsPath = "mailboxes." + player.getUniqueId() + ".pages." + page + ".items";
+        Player owner = playerMenuUtils.getOwner();
+        String itemsPath = "mailboxes." + owner.getUniqueId() + ".pages." + page + ".items";
         ConfigurationSection itemsSection = cfg.getConfigurationSection(itemsPath);
 
         if (itemsSection != null) {
@@ -107,7 +105,7 @@ public final class MailBoxMenu2 extends PaginatedMenu {
         addEmptySlots();
         addNextButton();
 
-        openedMailboxes.add(player.getUniqueId());
+        EdwigePlugin.getPlugin().getContext().registerOpenMenu(owner.getUniqueId(), "mailbox");
     }
 
     public void save(Player player, Inventory inventory) {
@@ -128,13 +126,5 @@ public final class MailBoxMenu2 extends PaginatedMenu {
         }
 
         EdwigePlugin.getPlugin().getContext().getMailboxesConfig().save();
-    }
-
-    public boolean hasMailboxOpen(UUID playerId) {
-        return openedMailboxes.contains(playerId);
-    }
-
-    public void markMailboxClosed(UUID playerId) {
-        openedMailboxes.remove(playerId);
     }
 }
