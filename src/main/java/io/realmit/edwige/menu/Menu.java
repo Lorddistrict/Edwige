@@ -2,7 +2,7 @@ package io.realmit.edwige.menu;
 
 import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.PluginContext;
-import io.realmit.edwige.menu.utils.PlayerMenuUtils;
+import io.realmit.edwige.menu.utils.MenuUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -13,11 +13,11 @@ import org.jspecify.annotations.NonNull;
 public abstract class Menu implements InventoryHolder {
 
     protected Inventory inventory;
-    protected PlayerMenuUtils playerMenuUtils;
+    protected MenuUtils menuUtils;
     protected final PluginContext context;
 
-    public Menu(PlayerMenuUtils playerMenuUtils) {
-        this.playerMenuUtils = playerMenuUtils;
+    public Menu(MenuUtils menuUtils) {
+        this.menuUtils = menuUtils;
         this.context = EdwigePlugin.getPlugin().getContext();
     }
 
@@ -32,8 +32,8 @@ public abstract class Menu implements InventoryHolder {
     public void open() {
         inventory = Bukkit.createInventory(this, getInventorySize(), getInventoryTitle());
         setMenuItems();
-        playerMenuUtils.getOwner().openInventory(inventory);
-        context.registerOpenMenu(playerMenuUtils.getOwner().getUniqueId(), "mailbox");
+        menuUtils.getOwner().openInventory(inventory);
+        context.registerOpenMenu(menuUtils.getOwner().getUniqueId(), "mailbox");
     }
 
     @NonNull @Override

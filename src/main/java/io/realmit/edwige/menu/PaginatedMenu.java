@@ -1,6 +1,6 @@
 package io.realmit.edwige.menu;
 
-import io.realmit.edwige.menu.utils.PlayerMenuUtils;
+import io.realmit.edwige.menu.utils.MenuUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -17,8 +17,8 @@ public abstract class PaginatedMenu extends Menu {
     protected static final int previousButtonSlot = 45;
     protected static final int nextButtonSlot = 53;
 
-    public PaginatedMenu(PlayerMenuUtils playerMenuUtils) {
-        super(playerMenuUtils);
+    public PaginatedMenu(MenuUtils menuUtils) {
+        super(menuUtils);
     }
 
     public void addPreviousButton() {

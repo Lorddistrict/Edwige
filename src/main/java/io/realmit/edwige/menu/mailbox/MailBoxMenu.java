@@ -1,8 +1,9 @@
-package io.realmit.edwige.menu;
+package io.realmit.edwige.menu.mailbox;
 
 import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.PluginContext;
-import io.realmit.edwige.menu.utils.PlayerMenuUtils;
+import io.realmit.edwige.menu.PaginatedMenu;
+import io.realmit.edwige.menu.utils.MenuUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -16,8 +17,8 @@ import org.bukkit.inventory.ItemStack;
 
 public final class MailBoxMenu extends PaginatedMenu {
 
-    public MailBoxMenu(PlayerMenuUtils playerMenuUtils) {
-        super(playerMenuUtils);
+    public MailBoxMenu(MenuUtils menuUtils) {
+        super(menuUtils);
     }
 
     @Override
@@ -73,14 +74,14 @@ public final class MailBoxMenu extends PaginatedMenu {
         FileConfiguration config = EdwigePlugin.getPlugin().getConfig();
         int maxPages = config.getInt("modules.mailbox.config.menus.mailboxMenu.maxPages");
         int currentPage = page+1;
-        String text = "Mailbox of " + playerMenuUtils.getOwner().getName() + " - " + currentPage + "/" + maxPages;
+        String text = "Mailbox of " + menuUtils.getOwner().getName() + " - " + currentPage + "/" + maxPages;
 
         return Component.text(text, NamedTextColor.DARK_RED);
     }
 
     @Override
     public void setMenuItems() {
-        String itemsPath = "mailboxes." + playerMenuUtils.getOwner().getUniqueId() + ".pages." + page + ".items";
+        String itemsPath = "mailboxes." + menuUtils.getOwner().getUniqueId() + ".pages." + page + ".items";
         PluginContext context = EdwigePlugin.getPlugin().getContext();
         FileConfiguration cfg = context.getMailboxesConfig().getConfig();
         ConfigurationSection itemsSection = cfg.getConfigurationSection(itemsPath);

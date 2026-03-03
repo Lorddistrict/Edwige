@@ -2,11 +2,11 @@ package io.realmit.edwige.menu.utils;
 
 import org.bukkit.entity.Player;
 
-public class PlayerMenuUtils {
+public class MenuUtils {
 
     Player owner;
 
-    public PlayerMenuUtils(Player owner) {
+    public MenuUtils(Player owner) {
         this.owner = owner;
     }
 

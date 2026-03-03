@@ -2,7 +2,7 @@ package io.realmit.edwige.listeners;
 
 import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.PluginContext;
-import io.realmit.edwige.menu.MailBoxMenu;
+import io.realmit.edwige.menu.mailbox.MailBoxMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

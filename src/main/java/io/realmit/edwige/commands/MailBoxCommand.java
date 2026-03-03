@@ -1,7 +1,7 @@
 package io.realmit.edwige.commands;
 
 import io.realmit.edwige.PluginContext;
-import io.realmit.edwige.menu.MailBoxMenu;
+import io.realmit.edwige.menu.mailbox.MailBoxMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -5,7 +5,7 @@ import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.MailBoxMenuConfig;
 import io.realmit.edwige.listeners.MailBoxListener;
 import io.realmit.edwige.listeners.MenuListener;
-import io.realmit.edwige.menu.utils.PlayerMenuUtils;
+import io.realmit.edwige.menu.utils.MenuUtils;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +18,7 @@ import java.util.*;
 public final class PluginContext {
 
     private final Map<UUID, String> openMenus = new HashMap<>();
-    private static final HashMap<Player, PlayerMenuUtils> playerMenuUtilsMap = new HashMap<>();
+    private static final HashMap<Player, MenuUtils> menuUtilsMap = new HashMap<>();
 
     private final MailBoxMenuConfig mailboxesConfig;
     private final MessageService messageService;
@@ -76,16 +76,16 @@ public final class PluginContext {
         return menuListener;
     }
 
-    public static PlayerMenuUtils getPlayerMenuUtils(Player player) {
-        PlayerMenuUtils playerMenuUtils;
+    public static MenuUtils getPlayerMenuUtils(Player player) {
+        MenuUtils menuUtils;
 
-        if (!playerMenuUtilsMap.containsKey(player)) {
-            playerMenuUtils = new PlayerMenuUtils(player);
-            playerMenuUtilsMap.put(player, playerMenuUtils);
+        if (!menuUtilsMap.containsKey(player)) {
+            menuUtils = new MenuUtils(player);
+            menuUtilsMap.put(player, menuUtils);
 
-            return playerMenuUtils;
+            return menuUtils;
         }
 
-        return playerMenuUtilsMap.get(player);
+        return menuUtilsMap.get(player);
     }
 }
