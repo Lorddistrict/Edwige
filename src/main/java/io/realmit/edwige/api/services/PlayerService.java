@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.services;
 
-import io.realmit.edwige.api.dto.responses.PlayerResponse;
+import io.realmit.edwige.api.dto.responses.player.PlayerResponse;
 import io.realmit.edwige.api.services.interfaces.ResponseBuilderServiceInterface;
 import net.milkbowl.vault.economy.Economy;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;

@@ -1,5 +1,6 @@
-package io.realmit.edwige.config;
+package io.realmit.edwige.config.mailbox;
 
+import io.realmit.edwige.EdwigePlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -11,16 +12,15 @@ public class MailBoxMenuConfig {
 
     public static final String MENU_CONFIG_FILE_NAME = "mailboxes.yml";
 
-    private final Plugin plugin;
     private File file;
     private FileConfiguration config;
 
-    public MailBoxMenuConfig(Plugin plugin) {
-        this.plugin = plugin;
+    public MailBoxMenuConfig() {
         createAndLoad();
     }
 
-    private void createAndLoad() {
+    public void createAndLoad() {
+        Plugin plugin = EdwigePlugin.getPlugin();
         file = new File(plugin.getDataFolder(), MENU_CONFIG_FILE_NAME);
 
         if (!file.exists()) {
@@ -43,6 +43,7 @@ public class MailBoxMenuConfig {
         try {
             config.save(file);
         } catch (IOException e) {
+            Plugin plugin = EdwigePlugin.getPlugin();
             plugin.getLogger().severe("Could not save " + MENU_CONFIG_FILE_NAME + ": " + e.getMessage());
         }
     }

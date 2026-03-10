@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.dto.responses;
+package io.realmit.edwige.api.dto.responses.validateRegistration;
 
 import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
 

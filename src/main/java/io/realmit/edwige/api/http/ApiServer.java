@@ -93,7 +93,7 @@ public final class ApiServer {
             return;
         }
 
-        ConsoleCommandService service = new ConsoleCommandService(plugin);
+        ConsoleCommandService service = new ConsoleCommandService();
         ConsoleCommandController controller = new ConsoleCommandController(service);
         ConsoleCommandHandler handler = new ConsoleCommandHandler(controller, bearerToken);
 

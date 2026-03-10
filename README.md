@@ -68,7 +68,7 @@ sequenceDiagram
 #### Features:
 
 - **Automatic delivery** on player join
-- **Manual redemption** via `/redeem` command
+- **Manual redemption** via `/redeem` commandRequest
 - **Inventory validation** - checks available slots before giving items
 - **Persistent storage** in `pending-items.yml`
 
@@ -104,7 +104,7 @@ sequenceDiagram
 
 | Command   | Permission              | Description                   |
 |-----------|-------------------------|-------------------------------|
-| `/redeem` | `edwige.command.redeem` | Redeem pending items manually |
+| `/redeem` | `edwige.commandRequest.redeem` | Redeem pending items manually |
 
 ---
 

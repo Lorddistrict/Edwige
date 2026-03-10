@@ -15,7 +15,7 @@ public final class EdwigePlugin extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         plugin = this;
-        context = new PluginContext(this);
+        context = new PluginContext();
 
         initApi();
         registerEvents();

@@ -1,5 +1,6 @@
 package io.realmit.edwige.services;
 
+import io.realmit.edwige.EdwigePlugin;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -15,16 +16,11 @@ import java.util.function.Consumer;
 public final class ChatQuestionService {
 
     private final MessageService msgService;
-    private final Plugin plugin;
     private final Map<UUID, Consumer<String>> waiting = new ConcurrentHashMap<>();
     private final Map<UUID, Consumer<Boolean>> yesNoWaiting = new ConcurrentHashMap<>();
 
-    public ChatQuestionService(
-            MessageService msgService,
-            Plugin plugin
-    ) {
+    public ChatQuestionService(MessageService msgService) {
         this.msgService = msgService;
-        this.plugin = plugin;
     }
 
     public void ask(Player player, String questionKey, Consumer<String> callback) {
@@ -39,6 +35,7 @@ public final class ChatQuestionService {
             return;
         }
 
+        Plugin plugin = EdwigePlugin.getPlugin();
         plugin.getServer().getScheduler().runTask(plugin, () -> callback.accept(message));
     }
 
@@ -112,6 +109,7 @@ public final class ChatQuestionService {
             return;
         }
 
+        Plugin plugin = EdwigePlugin.getPlugin();
         plugin.getServer().getScheduler().runTask(plugin, () -> callback.accept(isYes));
     }
 

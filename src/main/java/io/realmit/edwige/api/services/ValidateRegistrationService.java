@@ -1,8 +1,8 @@
 package io.realmit.edwige.api.services;
 
 import io.realmit.edwige.api.callbacks.ValidateRegistrationCallbackClient;
-import io.realmit.edwige.api.dto.requests.ValidateRegistrationRequest;
-import io.realmit.edwige.api.dto.responses.ValidateRegistrationResponse;
+import io.realmit.edwige.api.dto.requests.validateRegistration.ValidateRegistrationRequest;
+import io.realmit.edwige.api.dto.responses.validateRegistration.ValidateRegistrationResponse;
 import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
 import io.realmit.edwige.services.ChatQuestionService;
 import io.realmit.edwige.services.MessageService;

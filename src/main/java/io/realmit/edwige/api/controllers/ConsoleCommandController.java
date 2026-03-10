@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.controllers;
 
 import io.realmit.edwige.api.controllers.interfaces.RequestHandlerControllerInterface;
-import io.realmit.edwige.api.dto.requests.ConsoleCommandRequest;
+import io.realmit.edwige.api.dto.requests.console.ConsoleCommandRequest;
 import io.realmit.edwige.api.services.ConsoleCommandService;
 
 public final class ConsoleCommandController implements RequestHandlerControllerInterface<ConsoleCommandRequest> {

@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.services;
 
-import io.realmit.edwige.api.dto.responses.InfoResponse;
+import io.realmit.edwige.api.dto.responses.info.InfoResponse;
 import io.realmit.edwige.api.services.interfaces.ResponseBuilderServiceInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

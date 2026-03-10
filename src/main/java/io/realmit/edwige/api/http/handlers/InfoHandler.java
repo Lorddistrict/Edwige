@@ -3,7 +3,7 @@ package io.realmit.edwige.api.http.handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import io.realmit.edwige.api.controllers.InfoController;
-import io.realmit.edwige.api.dto.responses.InfoResponse;
+import io.realmit.edwige.api.dto.responses.info.InfoResponse;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;
 import io.realmit.edwige.api.http.utils.HttpUtils;

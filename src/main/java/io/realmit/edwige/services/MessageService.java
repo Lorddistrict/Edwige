@@ -1,23 +1,21 @@
 package io.realmit.edwige.services;
 
+import io.realmit.edwige.EdwigePlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 
 public final class MessageService {
 
-    private final Plugin plugin;
     private final MiniMessage mini = MiniMessage.miniMessage();
     private FileConfiguration config;
 
-    public MessageService(Plugin plugin) {
-        this.plugin = plugin;
+    public MessageService() {
         load();
     }
 
@@ -27,8 +25,8 @@ public final class MessageService {
 
     private void load() {
         String resourcePath = "messages.yml";
-        File file = new File(plugin.getDataFolder(), resourcePath);
-        plugin.saveResource(resourcePath, true);
+        File file = new File(EdwigePlugin.getPlugin().getDataFolder(), resourcePath);
+        EdwigePlugin.getPlugin().saveResource(resourcePath, true);
         config = YamlConfiguration.loadConfiguration(file);
     }
 

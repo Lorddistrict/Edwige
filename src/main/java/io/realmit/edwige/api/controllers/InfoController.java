@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.controllers;
 
 import io.realmit.edwige.api.controllers.interfaces.ResponseBuilderControllerInterface;
-import io.realmit.edwige.api.dto.responses.InfoResponse;
+import io.realmit.edwige.api.dto.responses.info.InfoResponse;
 import io.realmit.edwige.api.services.InfoService;
 
 public final class InfoController implements ResponseBuilderControllerInterface<InfoResponse> {

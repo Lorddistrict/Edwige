@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.controllers;
 
 import io.realmit.edwige.api.controllers.interfaces.RequestHandlerControllerInterface;
-import io.realmit.edwige.api.dto.requests.ValidateRegistrationRequest;
+import io.realmit.edwige.api.dto.requests.validateRegistration.ValidateRegistrationRequest;
 import io.realmit.edwige.api.services.ValidateRegistrationService;
 
 public final class ValidateRegistrationController implements RequestHandlerControllerInterface<ValidateRegistrationRequest> {
