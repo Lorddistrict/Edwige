@@ -1,12 +1,12 @@
 package io.realmit.edwige.api.dto.requests.console.enums;
 
-public enum OnExpire {
+public enum OnExpireEnum {
     DISCARD("DISCARD"),
     RETRY("RETRY");
 
     private final String onExpire;
 
-    OnExpire(String onExpire) {
+    OnExpireEnum(String onExpire) {
         this.onExpire = onExpire;
     }
 

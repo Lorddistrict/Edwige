@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.dto.responses.player;
 
-import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
+import io.realmit.edwige.api.dto.responses.interfaces.ResponseInterface;
 
 public record PlayerResponse(
     String uuid,

@@ -1,7 +1,7 @@
 package io.realmit.edwige.api.callbacks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
+import io.realmit.edwige.api.dto.responses.interfaces.ResponseInterface;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import org.bukkit.plugin.Plugin;
 

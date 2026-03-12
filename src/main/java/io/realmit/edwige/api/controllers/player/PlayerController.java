@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.controllers;
+package io.realmit.edwige.api.controllers.player;
 
 import io.realmit.edwige.api.controllers.interfaces.ResponseBuilderControllerInterface;
 import io.realmit.edwige.api.dto.responses.player.PlayerResponse;

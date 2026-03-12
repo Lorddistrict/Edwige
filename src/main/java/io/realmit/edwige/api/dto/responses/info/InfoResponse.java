@@ -1,6 +1,6 @@
 package io.realmit.edwige.api.dto.responses.info;
 
-import io.realmit.edwige.api.dto.requests.interfaces.ResponseInterface;
+import io.realmit.edwige.api.dto.responses.interfaces.ResponseInterface;
 
 public record InfoResponse(
     int onlineCount,

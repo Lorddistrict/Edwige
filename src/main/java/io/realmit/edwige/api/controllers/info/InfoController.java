@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.controllers;
+package io.realmit.edwige.api.controllers.info;
 
 import io.realmit.edwige.api.controllers.interfaces.ResponseBuilderControllerInterface;
 import io.realmit.edwige.api.dto.responses.info.InfoResponse;

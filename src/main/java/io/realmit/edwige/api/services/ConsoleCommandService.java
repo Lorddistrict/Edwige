@@ -4,40 +4,42 @@ import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.PluginContext;
 import io.realmit.edwige.api.dto.requests.console.CommandRequest;
 import io.realmit.edwige.api.dto.requests.console.ConsoleCommandRequest;
-import io.realmit.edwige.api.dto.requests.console.enums.RunAsEnum;
-import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
+import io.realmit.edwige.api.dto.responses.console.CommandResponse;
+import io.realmit.edwige.api.dto.responses.console.enums.StatusEnum;
 import io.realmit.edwige.serializer.CommandSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-public class ConsoleCommandService implements RequestHandlerServiceInterface<ConsoleCommandRequest> {
+public class ConsoleCommandService {
 
-    @Override
-    public void handleRequest(ConsoleCommandRequest consoleCommandRequest) {
-        if (consoleCommandRequest == null) return;
+    public CommandResponse buildResponse(ConsoleCommandRequest consoleCommandRequest) {
+        List<StatusEnum> statuses = new ArrayList<>();
+        List<String> outputs = new ArrayList<>();
 
-        List<CommandRequest> commandRequestList = consoleCommandRequest.commands();
-
-        for (CommandRequest commandRequest : commandRequestList) {
+        for (CommandRequest commandRequest : consoleCommandRequest.commands()) {
             if (commandRequest.targetPlayer() == null) {
                 handleDirectCommand(commandRequest);
+                statuses.add(StatusEnum.SUCCESS);
+                outputs.add("Command dispatched: " + commandRequest.command());
                 continue;
             }
 
             if (Bukkit.getPlayer(commandRequest.targetPlayer()) == null) {
                 handleOfflinePlayer(commandRequest);
+                statuses.add(StatusEnum.QUEUED);
+                outputs.add("Player offline, command queued: " + commandRequest.command());
                 continue;
             }
 
-            handleOnlinePlayer(commandRequest);
+            handleDirectCommand(commandRequest);
+            statuses.add(StatusEnum.SUCCESS);
+            outputs.add("Command dispatched to player: " + commandRequest.command());
         }
+
+        return new CommandResponse(statuses, outputs);
     }
 
     private void handleDirectCommand(CommandRequest request) {
@@ -65,22 +67,5 @@ public class ConsoleCommandService implements RequestHandlerServiceInterface<Con
         commandSerializerList.add(CommandSerializer.fromRequest(request));
         cfg.set(path, commandSerializerList);
         context.getCommandConfig().save();
-    }
-
-    private void handleOnlinePlayer(CommandRequest request) {
-        CommandSender sender = resolveSender(request.runAs(), request.targetPlayer());
-        if (sender == null) return;
-
-        Bukkit.getScheduler().runTask(
-                EdwigePlugin.getPlugin(), () -> Bukkit.dispatchCommand(sender, request.command())
-        );
-    }
-
-    private @Nullable CommandSender resolveSender(RunAsEnum runAs, UUID targetPlayer) {
-        if (runAs == RunAsEnum.PLAYER) {
-            return Bukkit.getPlayer(targetPlayer);
-        }
-
-        return Bukkit.getConsoleSender();
     }
 }

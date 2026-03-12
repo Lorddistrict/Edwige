@@ -2,7 +2,7 @@ package io.realmit.edwige.api.http.handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.realmit.edwige.api.controllers.PlayerController;
+import io.realmit.edwige.api.controllers.player.PlayerController;
 import io.realmit.edwige.api.dto.responses.player.PlayerResponse;
 import io.realmit.edwige.api.http.enums.HttpMethods;
 import io.realmit.edwige.api.http.enums.HttpStatus;

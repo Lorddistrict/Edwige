@@ -1,4 +1,3 @@
 package io.realmit.edwige.api.dto.requests.interfaces;
 
-public interface ResponseInterface<R> {
-}
+public interface RequestInterface2<T> {}

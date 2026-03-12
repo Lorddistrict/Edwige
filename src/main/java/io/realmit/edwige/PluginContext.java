@@ -1,6 +1,6 @@
 package io.realmit.edwige;
 
-import io.realmit.edwige.api.listeners.ChatQuestionListener;
+import io.realmit.edwige.listeners.ChatQuestionListener;
 import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.command.CommandConfig;
 import io.realmit.edwige.config.mailbox.MailBoxMenuConfig;

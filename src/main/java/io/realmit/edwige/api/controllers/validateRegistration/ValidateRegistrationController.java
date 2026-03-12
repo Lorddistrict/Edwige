@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.controllers;
+package io.realmit.edwige.api.controllers.validateRegistration;
 
 import io.realmit.edwige.api.controllers.interfaces.RequestHandlerControllerInterface;
 import io.realmit.edwige.api.dto.requests.validateRegistration.ValidateRegistrationRequest;

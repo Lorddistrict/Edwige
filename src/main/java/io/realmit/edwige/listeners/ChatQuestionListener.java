@@ -1,4 +1,4 @@
-package io.realmit.edwige.api.listeners;
+package io.realmit.edwige.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import io.realmit.edwige.services.ChatQuestionService;
@@ -11,9 +11,7 @@ public final class ChatQuestionListener implements Listener {
 
     private final ChatQuestionService service;
 
-    public ChatQuestionListener(
-            ChatQuestionService service
-    ) {
+    public ChatQuestionListener(ChatQuestionService service) {
         this.service = service;
     }
 
