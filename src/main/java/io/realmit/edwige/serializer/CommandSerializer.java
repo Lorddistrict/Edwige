@@ -1,6 +1,6 @@
 package io.realmit.edwige.serializer;
 
-import io.realmit.edwige.api.dto.requests.console.CommandRequest;
+import io.realmit.edwige.api.console.CommandRequest;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.jetbrains.annotations.NotNull;

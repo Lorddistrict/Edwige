@@ -1,6 +1,6 @@
 package io.realmit.edwige;
 
-import io.realmit.edwige.api.http.ApiServer;
+import io.realmit.edwige.api.shared.http.ApiServer;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
