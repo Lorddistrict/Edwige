@@ -1,4 +1,4 @@
-package io.realmit.edwige.services;
+package io.realmit.edwige.services.chat;
 
 import io.realmit.edwige.EdwigePlugin;
 import net.kyori.adventure.audience.Audience;

@@ -1,4 +1,4 @@
-package io.realmit.edwige.listeners;
+package io.realmit.edwige.listeners.mailbox;
 
 import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.PluginContext;

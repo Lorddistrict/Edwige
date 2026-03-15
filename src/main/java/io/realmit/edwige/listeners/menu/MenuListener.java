@@ -1,4 +1,4 @@
-package io.realmit.edwige.listeners;
+package io.realmit.edwige.listeners.menu;
 
 import io.realmit.edwige.menu.Menu;
 import org.bukkit.entity.Player;

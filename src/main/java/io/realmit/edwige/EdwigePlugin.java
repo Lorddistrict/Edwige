@@ -71,6 +71,7 @@ public final class EdwigePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(context.getChatQuestionListener(), this);
         getServer().getPluginManager().registerEvents(context.getMenuListener(), this);
         getServer().getPluginManager().registerEvents(context.getMailboxListener(), this);
+        getServer().getPluginManager().registerEvents(context.getPlayerJoinListener(), this);
     }
 
     private void registerCommands() {

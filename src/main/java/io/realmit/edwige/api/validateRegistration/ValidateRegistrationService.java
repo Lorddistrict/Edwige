@@ -1,8 +1,8 @@
 package io.realmit.edwige.api.validateRegistration;
 
 import io.realmit.edwige.api.services.interfaces.RequestHandlerServiceInterface;
-import io.realmit.edwige.services.ChatQuestionService;
-import io.realmit.edwige.services.MessageService;
+import io.realmit.edwige.services.chat.ChatQuestionService;
+import io.realmit.edwige.services.chat.MessageService;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

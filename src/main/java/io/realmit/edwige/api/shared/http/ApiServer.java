@@ -15,8 +15,8 @@ import io.realmit.edwige.api.console.ConsoleCommandService;
 import io.realmit.edwige.api.info.InfoService;
 import io.realmit.edwige.api.player.PlayerService;
 import io.realmit.edwige.api.validateRegistration.ValidateRegistrationService;
-import io.realmit.edwige.services.ChatQuestionService;
-import io.realmit.edwige.services.MessageService;
+import io.realmit.edwige.services.chat.ChatQuestionService;
+import io.realmit.edwige.services.chat.MessageService;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;

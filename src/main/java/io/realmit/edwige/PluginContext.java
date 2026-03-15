@@ -1,17 +1,18 @@
 package io.realmit.edwige;
 
-import io.realmit.edwige.listeners.ChatQuestionListener;
+import io.realmit.edwige.listeners.chat.ChatQuestionListener;
 import io.realmit.edwige.commands.MailBoxCommand;
 import io.realmit.edwige.config.command.CommandConfig;
 import io.realmit.edwige.config.mailbox.MailBoxMenuConfig;
-import io.realmit.edwige.listeners.MailBoxListener;
-import io.realmit.edwige.listeners.MenuListener;
+import io.realmit.edwige.listeners.mailbox.MailBoxListener;
+import io.realmit.edwige.listeners.menu.MenuListener;
+import io.realmit.edwige.listeners.player.PlayerJoinListener;
 import io.realmit.edwige.menu.utils.MenuUtils;
-import io.realmit.edwige.services.ChatQuestionService;
-import io.realmit.edwige.services.MessageService;
+import io.realmit.edwige.services.chat.ChatQuestionService;
+import io.realmit.edwige.services.chat.MessageService;
+import io.realmit.edwige.services.command.PendingCommandService;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import java.util.*;
 
@@ -27,6 +28,8 @@ public final class PluginContext {
     private final MailBoxListener mailboxListener;
     private final MenuListener menuListener;
     private final CommandConfig commandConfig;
+    private final PlayerJoinListener playerJoinListener;
+    private final PendingCommandService pendingCommandService;
 
     public PluginContext() {
         this.messageService = new MessageService();
@@ -36,6 +39,8 @@ public final class PluginContext {
         this.mailboxListener = new MailBoxListener();
         this.menuListener = new MenuListener();
         this.commandConfig = new CommandConfig();
+        this.playerJoinListener = new PlayerJoinListener();
+        this.pendingCommandService = new PendingCommandService();
     }
 
     public void registerOpenMenu(UUID playerId, String menuType) {
@@ -62,11 +67,11 @@ public final class PluginContext {
         return chatQuestionService;
     }
 
-    public Listener getChatQuestionListener() {
+    public ChatQuestionListener getChatQuestionListener() {
         return chatQuestionListener;
     }
 
-    public Listener getMailboxListener() {
+    public MailBoxListener getMailboxListener() {
         return mailboxListener;
     }
 
@@ -74,12 +79,20 @@ public final class PluginContext {
         return new MailBoxCommand();
     }
 
-    public Listener getMenuListener() {
+    public MenuListener getMenuListener() {
         return menuListener;
     }
 
     public CommandConfig getCommandConfig() {
         return commandConfig;
+    }
+
+    public PlayerJoinListener getPlayerJoinListener() {
+        return playerJoinListener;
+    }
+
+    public PendingCommandService getPendingCommandService() {
+        return pendingCommandService;
     }
 
     public static MenuUtils getPlayerMenuUtils(Player player) {

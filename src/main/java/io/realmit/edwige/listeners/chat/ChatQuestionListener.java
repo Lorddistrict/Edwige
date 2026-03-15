@@ -1,7 +1,7 @@
-package io.realmit.edwige.listeners;
+package io.realmit.edwige.listeners.chat;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import io.realmit.edwige.services.ChatQuestionService;
+import io.realmit.edwige.services.chat.ChatQuestionService;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
