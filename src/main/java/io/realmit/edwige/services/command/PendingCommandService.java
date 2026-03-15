@@ -9,15 +9,16 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PendingCommandService {
 
-    public void add(CommandSerializer commandSerializer) {
+    public void add(UUID targetPlayer, CommandSerializer commandSerializer) {
         PluginContext context = EdwigePlugin.getPlugin().getContext();
         FileConfiguration cfg = context.getCommandConfig().getConfig();
         List<CommandSerializer> commandSerializerList = new ArrayList<>();
 
-        String path = "commands." + commandSerializer.targetPlayer();
+        String path = "commands." + targetPlayer;
         List<?> list = cfg.getList(path);
 
         if (list != null) {

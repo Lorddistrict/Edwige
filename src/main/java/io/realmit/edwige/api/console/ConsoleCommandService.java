@@ -3,6 +3,7 @@ package io.realmit.edwige.api.console;
 import io.realmit.edwige.EdwigePlugin;
 import io.realmit.edwige.api.console.enums.StatusEnum;
 import io.realmit.edwige.serializer.CommandSerializer;
+import io.realmit.edwige.services.command.PendingCommandService;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class ConsoleCommandService {
     }
 
     private void handleOfflinePlayer(CommandRequest request) {
-        EdwigePlugin.getPlugin().getContext().getPendingCommandService().add(CommandSerializer.fromRequest(request));
+        PendingCommandService service = EdwigePlugin.getPlugin().getContext().getPendingCommandService();
+        service.add(request.targetPlayer(), CommandSerializer.fromRequest(request));
     }
 }

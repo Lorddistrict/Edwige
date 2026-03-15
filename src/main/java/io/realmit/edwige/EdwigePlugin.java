@@ -1,8 +1,10 @@
 package io.realmit.edwige;
 
 import io.realmit.edwige.api.shared.http.ApiServer;
+import io.realmit.edwige.serializer.CommandSerializer;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EdwigePlugin extends JavaPlugin {
@@ -15,6 +17,9 @@ public final class EdwigePlugin extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         plugin = this;
+
+        registerSerializers();
+
         context = new PluginContext();
 
         initApi();
@@ -65,6 +70,10 @@ public final class EdwigePlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             throw new IllegalStateException("Failed to start API server", e);
         }
+    }
+
+    private void registerSerializers() {
+        ConfigurationSerialization.registerClass(CommandSerializer.class);
     }
 
     private void registerEvents() {
